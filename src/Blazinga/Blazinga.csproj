@@ -2,6 +2,14 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
+        <PackageId>Blazinga</PackageId>
+        <Version>0.0.1</Version>
+        <Authors>Antoine Griffard</Authors>
+        <Description>Blazor components.</Description>
+        <PackageTags>blazor, components</PackageTags>
+        <RepositoryUrl>https://github.com/agriffard/Blazinga</RepositoryUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/agriffard/Blazinga</PackageProjectUrl>
         <Nullable>enable</Nullable>
         <OutputType>Library</OutputType>
     </PropertyGroup>
