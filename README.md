@@ -1,19 +1,17 @@
-# BlazingaEnumSelect
+# Blazinga
 
-BlazingaEnumSelect is a Blazor component library for easy integration of enum values in `select` elements with localization support.
+Blazinga is a Blazor components library.
 
 ## Features
 
 - Bind enum values to a select input.
-- Support for localization using Display attributes.
-- Customizable UI with `AdditionalAttributes`.
 
 ## Installation
 
-You can install the library via NuGet after creating a release.
+https://www.nuget.org/packages/Blazinga/
 
 ## Usage
 
 ```razor
-<EnumSelect TValue="Status" Value="@currentStatus" class="form-select" />
+<EnumSelect @bind-Value="Status" />
 ```
