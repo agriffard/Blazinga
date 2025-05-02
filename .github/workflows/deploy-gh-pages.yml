@@ -19,7 +19,7 @@ jobs:
 
       - name: Publish Blazor WebAssembly app
         run: |
-          dotnet publish src/Blazinga.Samples.csproj \
+          dotnet publish src/Blazinga.Samples/Blazinga.Samples.csproj \
             -c Release \
             -o release \
             --nologo
