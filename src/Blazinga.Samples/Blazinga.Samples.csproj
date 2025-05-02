@@ -9,10 +9,11 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.15" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.15" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\src\Blazinga.csproj" />
+        <ProjectReference Include="..\Blazinga\Blazinga.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -22,11 +23,11 @@
             <DependentUpon>EnumsRes.resx</DependentUpon>
         </Compile>
     </ItemGroup>
-    
+
     <ItemGroup>
         <EmbeddedResource Update="Resources\EnumsRes.fr.resx">
-          <LastGenOutput>EnumsRes.fr.Designer.cs</LastGenOutput>
-          <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>EnumsRes.fr.Designer.cs</LastGenOutput>
+            <Generator>PublicResXFileCodeGenerator</Generator>
         </EmbeddedResource>
         <EmbeddedResource Update="Resources\EnumsRes.fr.resx">
             <SubType>Designer</SubType>
