@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33020.164
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazinga", "src\Blazinga.csproj", "{B371EE16-2573-96F2-F106-EE21122D4D7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazinga.Samples", "Blazinga.Samples\Blazinga.Samples.csproj", "{38BB4D09-EF35-4D87-B7A6-91AEBA1EA363}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B371EE16-2573-96F2-F106-EE21122D4D7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B371EE16-2573-96F2-F106-EE21122D4D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B371EE16-2573-96F2-F106-EE21122D4D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B371EE16-2573-96F2-F106-EE21122D4D7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38BB4D09-EF35-4D87-B7A6-91AEBA1EA363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38BB4D09-EF35-4D87-B7A6-91AEBA1EA363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38BB4D09-EF35-4D87-B7A6-91AEBA1EA363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38BB4D09-EF35-4D87-B7A6-91AEBA1EA363}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75ADA577-005B-41D7-96D9-34091729FDAA}
+	EndGlobalSection
+EndGlobal
