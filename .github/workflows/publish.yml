@@ -12,6 +12,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Set VERSION from release tag
+      run: |
+        VERSION=${GITHUB_REF_NAME#v}
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+    - name: Update <Version> in csproj
+      run: |
+        sed -i 's|<Version>.*</Version>|<Version>'$VERSION'</Version>|' src/Blazinga/Blazinga.csproj
+        
     - name: Set up .NET
       uses: actions/setup-dotnet@v4
       with:
