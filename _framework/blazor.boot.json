@@ -1,10 +1,10 @@
 {
   "mainAssemblyName": "Blazinga.Samples",
   "resources": {
-    "hash": "sha256-tpVfu05peVmuvFip9qCZouH+TZGOByxhC71R1gkHnsc=",
+    "hash": "sha256-r30grjqrmoTNX0G7T7umKWJFJWfc1Dtdg8E604Vk4mo=",
     "fingerprinting": {
-      "Blazinga.Samples.lmeqmqsd7t.wasm": "Blazinga.Samples.wasm",
-      "Blazinga.yha0duk6p8.wasm": "Blazinga.wasm",
+      "Blazinga.Samples.mzbm5fdj2b.wasm": "Blazinga.Samples.wasm",
+      "Blazinga.bezb9ekpjq.wasm": "Blazinga.wasm",
       "Microsoft.AspNetCore.Components.Forms.1fsn9jkhjf.wasm": "Microsoft.AspNetCore.Components.Forms.wasm",
       "Microsoft.AspNetCore.Components.366vlbyo5y.wasm": "Microsoft.AspNetCore.Components.wasm",
       "Microsoft.AspNetCore.Components.Web.fhre53v8x0.wasm": "Microsoft.AspNetCore.Components.Web.wasm",
@@ -48,7 +48,7 @@
       "System.Text.Json.97uh7nogij.wasm": "System.Text.Json.wasm",
       "System.Text.RegularExpressions.gjrc7fe0iy.wasm": "System.Text.RegularExpressions.wasm",
       "System.f0fr8djds0.wasm": "System.wasm",
-      "Blazinga.Samples.resources.zi1zu6wejo.wasm": "Blazinga.Samples.resources.wasm",
+      "Blazinga.Samples.resources.z7h354aapo.wasm": "Blazinga.Samples.resources.wasm",
       "dotnet.js": "dotnet.js",
       "dotnet.native.hvg7u8bimp.js": "dotnet.native.js",
       "dotnet.native.3c4wvb350q.wasm": "dotnet.native.wasm",
@@ -76,8 +76,8 @@
       "System.Runtime.InteropServices.JavaScript.zp9u3yqbi4.wasm": "sha256-t5fC5E2r9YJ+puOWw7YuXXMwvd7LxeR0Zt16THexNM0="
     },
     "assembly": {
-      "Blazinga.Samples.lmeqmqsd7t.wasm": "sha256-c7X6RTfWD9CgR3+yO//MAFvUv15n90QCzu+PP+Pjn/I=",
-      "Blazinga.yha0duk6p8.wasm": "sha256-JlrYFqiY/4wqvLO4OFXVa8TqwDn1WCVyPuQJQQEItAI=",
+      "Blazinga.Samples.mzbm5fdj2b.wasm": "sha256-MjcQDo9EGc1DrV51TumEYrLQLHIha1darZARKIRndus=",
+      "Blazinga.bezb9ekpjq.wasm": "sha256-DVe/QMyfKUfe65hyLJ3uUyYx/VbSyV+NR5r7XNq+lY0=",
       "Microsoft.AspNetCore.Components.Forms.1fsn9jkhjf.wasm": "sha256-Y7sPlZBRneL09VagFeM1IeubWhiuH8wl4685M4pZk5U=",
       "Microsoft.AspNetCore.Components.366vlbyo5y.wasm": "sha256-BW4Hvy72tzzvbIuQRjO7t0CSInLg8sSzuWT2BhiBPqU=",
       "Microsoft.AspNetCore.Components.Web.fhre53v8x0.wasm": "sha256-o4NARhpU620MkFEAg9+HO1/CfmLzrvRc5i63guyoeH0=",
@@ -122,7 +122,7 @@
     },
     "satelliteResources": {
       "fr": {
-        "Blazinga.Samples.resources.zi1zu6wejo.wasm": "sha256-hde5dxMkm0yTdMVJ7yAW2lM7mDcZblr8kKdlHWHTgls="
+        "Blazinga.Samples.resources.z7h354aapo.wasm": "sha256-EbEkPeg4efCmkYVF/Z+lKn4aYW5Gq6Sc/eJ+2CWs0ys="
       }
     }
   },
