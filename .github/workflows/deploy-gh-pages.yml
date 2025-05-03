@@ -18,7 +18,13 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Publish Blazor WebAssembly app
-        run: dotnet publish src/Blazinga.Samples/Blazinga.Samples.csproj -c Release -o release -p:BasePath="/Blazinga/"
+        run: dotnet publish src/Blazinga.Samples/Blazinga.Samples.csproj -c Release -o release
+        
+      - name: Set <base href="/Blazinga/"> in index.html
+        run: |
+          INDEX_FILE=release/wwwroot/index.html
+          echo "Patching $INDEX_FILE"
+          sed -i 's|<base href="/" />|<base href="/Blazinga/" />|' $INDEX_FILE
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
