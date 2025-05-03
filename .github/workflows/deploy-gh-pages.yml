@@ -10,10 +10,16 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        
+      - name: Set VERSION from release tag
+        run: echo "VERSION=$VERSION" >> $GITHUB_ENV
 
+      - name: Update <Version> in csproj
+        run: sed -i 's|<Version>.*</Version>|<Version>'$VERSION'</Version>|' src/Blazinga/Blazinga.csproj
+        
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
 
