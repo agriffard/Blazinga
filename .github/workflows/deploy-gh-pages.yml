@@ -18,11 +18,7 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Publish Blazor WebAssembly app
-        run: |
-          dotnet publish src/Blazinga.Samples/Blazinga.Samples.csproj \
-            -c Release \
-            -o release \
-            --nologo
+        run: dotnet publish src/Blazinga.Samples/Blazinga.Samples.csproj -c Release -o release -p:BasePath="/Blazinga/"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
