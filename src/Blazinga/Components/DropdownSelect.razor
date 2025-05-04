@@ -1,0 +1,120 @@
+@using System.Linq.Expressions
+@typeparam TItem
+@typeparam TValue
+
+<div class="@CssClass" style="position: relative;">
+    <div class="d-flex align-items-center" style="cursor:pointer" tabindex="0">
+        <span class="flex-grow-1" @onclick="ToggleDropdown">
+            <span class="float-end">
+                <span class="dropdown-toggle"></span>
+            </span>
+            @if (SelectedItem != null)
+            {
+                @TextSelector.Compile().Invoke(SelectedItem)
+            }
+            else
+            {
+                <span class="text-muted">@Placeholder</span>
+            }
+        </span>
+        @if (Value != null)
+        {
+            <span class="ms-2">
+                <button type="button" class="btn-close btn-sm" @onclick="ResetValue"></button>
+            </span>
+        }
+    </div>
+    @if (IsDropdownVisible)
+    {
+        <div class="">
+            @if (AllowSearch)
+            {
+                <input type="search" class="form-control mb-1" placeholder="@SearchPlaceholder" value="@SearchText" @oninput="OnSearchTextInput" />
+            }
+            <div class="list-group overflow-auto" style="max-height: @(Height)px">
+                @if (FilteredItems.Any())
+                {
+                    @foreach (var item in FilteredItems)
+                    {
+                        <a class="@ItemCssClass list-group-item list-group-item-action" style="cursor:pointer" @onclick="() => SelectItem(item)" tabindex="0">
+                            @TextSelector.Compile().Invoke(item)
+                        </a>
+                    }
+                }
+                else
+                {
+                    <li class="@ItemCssClass list-group-item text-muted">@NoResultsText</li>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public List<TItem> Items { get; set; } = new List<TItem>();
+    [Parameter] public TValue Value { get; set; }
+    [Parameter] public EventCallback<TValue> ValueChanged { get; set; }
+    [Parameter] public Expression<Func<TItem, TValue>> ValueSelector { get; set; }
+    [Parameter] public Expression<Func<TItem, string>> TextSelector { get; set; }
+    [Parameter] public int Height { get; set; } = 200;
+    [Parameter] public bool AllowSearch { get; set; }
+    [Parameter] public string Placeholder { get; set; } // = SharedResource.SelectAnItem;
+    [Parameter] public string SearchPlaceholder { get; set; } // = SharedResource.SearchPlaceholder;
+    [Parameter] public string NoResultsText { get; set; } // = SharedResource.NoResults;
+    [Parameter] public string CssClass { get; set; } = string.Empty;
+    [Parameter] public string ItemCssClass { get; set; } = string.Empty;
+
+    private bool IsDropdownVisible { get; set; }
+    private string SearchText { get; set; } = string.Empty;
+
+    private List<TItem> FilteredItems { get; set; } = new();
+
+    private TItem SelectedItem =>
+        Items.FirstOrDefault(item => EqualityComparer<TValue>.Default.Equals(ValueSelector.Compile().Invoke(item), Value));
+
+    private void ToggleDropdown()
+    {
+        IsDropdownVisible = !IsDropdownVisible;
+        if (IsDropdownVisible)
+        {
+            FilterItems();
+        }
+    }
+
+    private async Task SelectItem(TItem item)
+    {
+        Value = ValueSelector.Compile().Invoke(item);
+        await ValueChanged.InvokeAsync(Value);
+        IsDropdownVisible = false;
+    }
+
+    private async Task ResetValue()
+    {
+        Value = default;
+        await ValueChanged.InvokeAsync(Value);
+        SearchText = string.Empty;
+        FilterItems();
+        IsDropdownVisible = false;
+    }
+
+    private void OnSearchTextInput(ChangeEventArgs e)
+    {
+        SearchText = e.Value?.ToString() ?? string.Empty;
+        FilterItems();
+        IsDropdownVisible = true; // Show dropdown when filtering
+    }
+
+    private void FilterItems()
+    {
+        FilteredItems = Items
+            .Where(item => string.IsNullOrWhiteSpace(SearchText) ||
+                           TextSelector.Compile().Invoke(item).Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        FilterItems();
+    }
+}

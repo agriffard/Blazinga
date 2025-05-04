@@ -1,0 +1,41 @@
+@page "/dropdownSelectDemo"
+
+<PageTitle>DropdownSelect</PageTitle>
+
+<h1>DropdownSelect</h1>
+
+<p>
+    <label for="status">DropdownSelect</label>
+    <DropdownSelect TItem="UserSelectItem"
+                    Items="users"
+                    TValue="int"
+                    @bind-Value="UserId"
+                    TextSelector="item => item.Name"
+                    ValueSelector="item => item.Id"
+                    AllowSearch="true"
+                    Placeholder="Select an item"
+                    SearchPlaceholder="Search..."
+                    NoResultsText="No results."
+                    CssClass="form-control" Height="200" />
+</p>
+
+<p>Selected User: @UserId</p>
+
+@code {
+    private string selectedUser = string.Empty;
+    private int UserId { get; set; } = 1;
+    private List<UserSelectItem> users = new List<UserSelectItem>()
+    {
+        new UserSelectItem() { Id = 1, Name = "John Doe" },
+        new UserSelectItem() { Id = 2, Name = "Jane Smith" },
+        new UserSelectItem() { Id = 3, Name = "Alice Johnson" },
+        new UserSelectItem() { Id = 4, Name = "Bob Brown" },
+        new UserSelectItem() { Id = 5, Name = "Charlie Black" },
+    };
+
+    private class UserSelectItem
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+    }
+}
