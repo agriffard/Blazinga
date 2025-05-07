@@ -1,0 +1,41 @@
+@page "/multiSelectDemo"
+
+<PageTitle>MultiSelect</PageTitle>
+
+<h1>MultiSelect</h1>
+<div class="row">
+    <div class="col-6">
+        <label for="status">MultiSelect</label>
+        <MultiSelect TValue="int" TItem="TagModel" Items="@Tags"
+                     SelectedValues="@SelectedTags"
+                     SelectedValuesChanged="@OnSelectedTagsChanged"
+                     ValueSelector="@(x => x.Id)"
+                     TextSelector="@(x => x.Title)"
+                     Height="150" Placeholder="Select tags..." />
+    </div>
+    <div class="col-6">
+        <label for="status">Selected Tags:</label>
+        <ul class="list-unstyled">
+            @foreach (var tag in Tags.Where(t => SelectedTags.Contains(t.Id)))
+            {
+                <li>@tag.Title</li>
+            }
+        </ul>
+    </div>
+</div>
+
+@code {
+    private List<TagModel> Tags = new List<TagModel>()
+    {
+        new TagModel { Id = 1, Title = "Tag 1" },
+        new TagModel { Id = 2, Title = "Tag 2" },
+        new TagModel { Id = 3, Title = "Tag 3" },
+        new TagModel { Id = 4, Title = "Tag 4" },
+        new TagModel { Id = 5, Title = "Tag 5" },
+    };
+    private List<int> SelectedTags { get; set; } = new List<int>();
+    private void OnSelectedTagsChanged(List<int> selectedTags)
+    {
+        SelectedTags = selectedTags;
+    }
+}

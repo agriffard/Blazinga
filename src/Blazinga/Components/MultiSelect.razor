@@ -1,0 +1,79 @@
+@typeparam TItem
+@typeparam TValue
+@implements IAsyncDisposable
+
+<div class="multi-select-wrapper" style="position: relative;width: 100%;" @ref="_dropdownContainerRef">
+    <div class="form-control form-control-sm badge-list selected-items" @onclick="ToggleDropdown">
+        @if (SelectedValues.Any())
+        {
+            foreach (var selectedItem in SelectedValues)
+            {
+                var itemText = TextSelector.Compile().Invoke(Items.First(i => EqualityComparer<TValue>.Default.Equals(ValueSelector.Compile().Invoke(i), selectedItem)));
+                <span class="badge bg-primary text-white selected-badge">
+                    @itemText
+                    <a class="remove-badge text-white" @onclick="() => RemoveSelection(selectedItem)">
+                        &times;
+                    </a>
+                </span>
+            }
+        }
+        else
+        {
+            <span class="text-muted">@Placeholder</span>
+        }
+    </div>
+    <button type="button" class="toggle-button" @onclick="ToggleDropdown" tabindex="-1">
+        @if (IsDropdownVisible)
+        {
+            <i class="mdi mdi-chevron-up"></i>
+        }
+        else
+        {
+            <i class="mdi mdi-chevron-down"></i>
+        }
+    </button>
+
+    @if (IsDropdownVisible)
+    {
+        <div class="list-group" style="position: absolute;width: 100%;z-index: 1000;max-height: @(Height)px; overflow-y: auto;">
+            @foreach (var item in Items)
+            {
+                var itemValue = ValueSelector.Compile().Invoke(item);
+                var isChecked = SelectedValues.Contains(itemValue);
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <label>
+                        <input type="checkbox" checked="@isChecked" @onclick="() => ToggleSelection(itemValue)" />
+                        @TextSelector.Compile().Invoke(item)
+                    </label>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {    
+    // private RenderFragment<TItem> RenderItem => item =>
+    //     @<div class="dropdown-item" @onclick="() => ToggleOption(item)">
+    //         <label @onclick:stopPropagation="true">
+    //             <input type="checkbox" checked="@IsOptionSelected(item)"
+    //                    @onchange="() => ToggleOption(item)"/> @TextSelector(item)
+    //         </label>
+    //     </div>;
+
+    // private async Task ToggleOption(TItem option)
+    // {
+    //     var newSelected = new List<TItem>(SelectedValues);
+    //     if (!newSelected.Remove(option))
+    //     {
+    //         newSelected.Add(option);
+    //     }
+
+    //     SelectedValues = newSelected;
+    //     await SelectedValuesChanged.InvokeAsync(SelectedValues);
+    // }
+
+    // private bool IsSelected(TItem value)
+    // {
+    //     return SelectedValues.Contains(value);
+    // }
+}
