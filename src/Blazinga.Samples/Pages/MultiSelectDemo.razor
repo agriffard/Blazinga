@@ -14,7 +14,7 @@
                      Height="150" Placeholder="Select tags..." />
     </div>
     <div class="col-6">
-        <label for="status">Selected Tags:</label>
+        <label for="status">Selected Tags</label>
         <ul class="list-unstyled">
             @foreach (var tag in Tags.Where(t => SelectedTags.Contains(t.Id)))
             {
