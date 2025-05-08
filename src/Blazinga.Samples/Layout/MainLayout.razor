@@ -1,4 +1,7 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
+@inject ThemeService ThemeService
+
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -6,7 +9,12 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            <select class="form-select w-auto d-inline" @onchange="OnThemeChanged">
+                <option value="light" selected="@(ThemeService.CurrentTheme == "light")">☀️ Light</option>
+                <option value="dark" selected="@(ThemeService.CurrentTheme == "dark")">🌙 Dark</option>
+                <option value="auto" selected="@(ThemeService.CurrentTheme == "auto")">🌓 Auto</option>
+            </select>
+            @* <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a> *@
         </div>
 
         <article class="content px-4">
@@ -14,3 +22,10 @@
         </article>
     </main>
 </div>
+@code {
+    private async Task OnThemeChanged(ChangeEventArgs e)
+    {
+        var selected = e.Value?.ToString() ?? ThemeService.Auto;
+        ThemeService.SetTheme(selected);
+    }
+}

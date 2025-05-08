@@ -3,7 +3,7 @@
 @implements IAsyncDisposable
 
 <div class="multi-select-wrapper" style="position: relative;width: 100%;" @ref="_dropdownContainerRef">
-    <div class="form-control form-control-sm badge-list selected-items" @onclick="ToggleDropdown">
+    <div class="form-control badge-list selected-items" @onclick="ToggleDropdown">
         @if (SelectedValues.Any())
         {
             foreach (var selectedItem in SelectedValues)
@@ -22,7 +22,7 @@
             <span class="text-muted">@Placeholder</span>
         }
     </div>
-    <button type="button" class="toggle-button" @onclick="ToggleDropdown" tabindex="-1">
+    @* <button type="button" class="toggle-button" @onclick="ToggleDropdown" tabindex="-1">
         @if (IsDropdownVisible)
         {
             <i class="mdi mdi-chevron-up"></i>
@@ -31,7 +31,7 @@
         {
             <i class="mdi mdi-chevron-down"></i>
         }
-    </button>
+    </button> *@
 
     @if (IsDropdownVisible)
     {

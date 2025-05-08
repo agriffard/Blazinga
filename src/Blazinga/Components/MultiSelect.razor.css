@@ -1,4 +1,3 @@
-
 .selected-items {
     display: flex;
     flex-wrap: wrap;
@@ -28,10 +27,10 @@
 }
 
     .list-group-item:hover {
-        background-color: #f8f9fa;
+        background-color: var(--bs-tertiary-bg);
     }
 
-.toggle-button {
+/*.toggle-button {
     position: absolute;
     right: 0.3rem;
     top: 50%;
@@ -39,4 +38,4 @@
     background: transparent;
     border: none;
     color: #6c757d;
-}
+}*/
