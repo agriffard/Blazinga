@@ -1,7 +1,6 @@
 @inherits LayoutComponentBase
 @inject ThemeService ThemeService
-
-
+@inject IJSRuntime JS
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -9,11 +8,35 @@
 
     <main>
         <div class="top-row px-4">
-            <select class="form-select w-auto d-inline" @onchange="OnThemeChanged">
+            <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" style="text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @GetThemeIcon()
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <button class="dropdown-item d-flex align-items-center" @onclick="() => SetThemeLightAsync()">
+                                ☀️ Light
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item d-flex align-items-center" @onclick="() => SetThemeDarkAsync()">
+                                🌙 Dark
+                            </button>
+                        </li>
+                        <li>
+                            <button class="dropdown-item d-flex align-items-center" @onclick="() => SetThemeAutoAsync()">
+                                🌓 Auto
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            @* <select class="form-select w-auto d-inline" @onchange="OnThemeChanged">
                 <option value="light" selected="@(ThemeService.CurrentTheme == "light")">☀️ Light</option>
                 <option value="dark" selected="@(ThemeService.CurrentTheme == "dark")">🌙 Dark</option>
                 <option value="auto" selected="@(ThemeService.CurrentTheme == "auto")">🌓 Auto</option>
-            </select>
+            </select> *@
             @* <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a> *@
         </div>
 
@@ -22,10 +45,42 @@
         </article>
     </main>
 </div>
+
 @code {
-    private async Task OnThemeChanged(ChangeEventArgs e)
+    // private string GetThemeIcon()
+    // {
+    //     return ThemeService.CurrentTheme switch
+    //     {
+    //         "light" => "#sun-fill",
+    //         "dark" => "#moon-stars-fill",
+    //         _ => "#circle-half"
+    //     };
+    // }
+    private string GetThemeIcon()
     {
-        var selected = e.Value?.ToString() ?? ThemeService.Auto;
-        ThemeService.SetTheme(selected);
+        return ThemeService.CurrentTheme switch
+        {
+            "light" => "☀️",
+            "dark" => "🌙",
+            _ => "🌓"
+        };
+    }
+
+    private async Task SetThemeAsync(string theme)
+    {
+        await ThemeService.SetThemeAsync(theme);
+        StateHasChanged(); // update icon if needed
+    }
+    private async Task SetThemeLightAsync()
+    {
+        await SetThemeAsync("light");
+    }
+    private async Task SetThemeDarkAsync()
+    {
+        await SetThemeAsync("dark");
+    }
+    private async Task SetThemeAutoAsync()
+    {
+        await SetThemeAsync("auto");
     }
 }

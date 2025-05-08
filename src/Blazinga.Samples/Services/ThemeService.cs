@@ -1,23 +1,38 @@
+using Microsoft.JSInterop;
+
 namespace Blazinga.Samples.Services;
 
 public class ThemeService
 {
-    //public static readonly string[] ThemeOptions = [Light, Dark, Auto];
+    private const string ThemeKey = "theme"; // localStorage key
+    private readonly IJSRuntime _js;
 
-    public const string Light = "light";
-    public const string Dark = "dark";
-    public const string Auto = "auto";
+    public string CurrentTheme { get; private set; } = "auto";
 
-    public string CurrentTheme { get; private set; } = Auto;
-
-    public event Action? OnThemeChanged;
-
-    public void SetTheme(string theme)
+    public ThemeService(IJSRuntime js)
     {
-        if (theme != Light && theme != Dark && theme != Auto)
-            throw new ArgumentException("Invalid theme value.");
+        _js = js;
+    }
 
+    public async Task InitAsync()
+    {
+        var savedTheme = await _js.InvokeAsync<string>("localStorage.getItem", ThemeKey);
+        if (!string.IsNullOrEmpty(savedTheme))
+        {
+            CurrentTheme = savedTheme;
+        }
+        await ApplyThemeAsync(CurrentTheme);
+    }
+
+    public async Task SetThemeAsync(string theme)
+    {
         CurrentTheme = theme;
-        OnThemeChanged?.Invoke();
+        await _js.InvokeVoidAsync("localStorage.setItem", ThemeKey, theme);
+        await ApplyThemeAsync(theme);
+    }
+
+    private async Task ApplyThemeAsync(string theme)
+    {
+        await _js.InvokeVoidAsync("setBootstrapTheme", theme);
     }
 }

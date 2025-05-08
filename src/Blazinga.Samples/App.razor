@@ -1,5 +1,4 @@
 @inject ThemeService ThemeService
-@inject IJSRuntime JS
 
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
@@ -15,13 +14,6 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        var storedTheme = await JS.InvokeAsync<string>("getBsTheme");
-        ThemeService.SetTheme(storedTheme);
-        await JS.InvokeVoidAsync("setBsTheme", ThemeService.CurrentTheme);
-
-        ThemeService.OnThemeChanged += async () =>
-        {
-            await JS.InvokeVoidAsync("setBsTheme", ThemeService.CurrentTheme);
-        };
+        await ThemeService.InitAsync();
     }
 }
