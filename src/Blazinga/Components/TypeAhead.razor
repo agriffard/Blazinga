@@ -1,0 +1,42 @@
+@typeparam TItem
+@typeparam TValue
+<div class="input-wrapper" style="position: relative;width: 100%;" @onfocusout="HideDropdown">
+    <input type="text" @bind="Text" @oninput="OnTextChanged" @onfocus="ToggleDropdown" class="@CssClass" placeholder="@Placeholder" />
+    <button type="button" class="toggle-button" @onclick="ToggleDropdown" tabindex="-1">
+        @if (IsDropdownVisible)
+        {
+            <i class="bi bi-chevron-up"></i>
+        }
+        else
+        {
+            <i class="bi bi-chevron-down"></i>
+        }
+    </button>
+    <button type="button" class="btn btn-close btn-sm reset-button me-2" @onclick="ResetSelection" tabindex="-1"></button>
+    @if (IsDropdownVisible)
+    {
+        <ul class="list-group" style="position:absolute; width: 100%; z-index:1000; max-height:@(Height)px; overflow-y:auto;">
+            @if (FilteredItems.Data.Any())
+            {
+                @foreach (var item in FilteredItems.Data)
+                {
+                    <li class="list-group-item list-group-item-action" @onmousedown="() => SelectItem(item)"
+                        @onkeydown="(e) => OnItemKeyDown(e, item)" style="cursor: pointer" tabindex="0">
+                        @TextSelector.Compile()(item)
+                    </li>
+                }
+                <li class="list-group-item text-muted" style="cursor: pointer;" @onclick="HideDropdown">
+                    <i class="mdi mdi-close float-end" aria-hidden="true"></i>
+                    @FilteredItems.Data.Count / @FilteredItems.TotalCount
+                </li>
+            }
+            else
+            {
+                <li class="list-group-item text-muted" style="cursor: pointer;" @onclick="HideDropdown">
+                    <i class="mdi mdi-close float-end" aria-hidden="true"></i>
+                    @NoResultsText
+                </li>
+            }
+        </ul>
+    }
+</div>

@@ -5,22 +5,35 @@
     DropdownSelect
 </SectionContent>
 
-<p>
-    <label for="status">User</label>
-    <DropdownSelect TItem="UserSelectItem"
-                    Items="users"
-                    TValue="int"
-                    @bind-Value="UserId"
-                    TextSelector="item => item.Name"
-                    ValueSelector="item => item.Id"
-                    AllowSearch="true"
-                    Placeholder="Select an item"
-                    SearchPlaceholder="Search..."
-                    NoResultsText="No results."
-                    CssClass="form-control" ItemCssClass="list-group-item-light" Height="200" />
-</p>
-
-<p>Selected User: @UserId</p>
+<div class="row">
+    <div class="col-6">
+        <label>User</label>
+        <DropdownSelect TItem="UserSelectItem"
+                        Items="users"
+                        TValue="int"
+                        @bind-Value="UserId"
+                        TextSelector="item => item.Name"
+                        ValueSelector="item => item.Id"
+                        AllowSearch="true"
+                        Placeholder="Select a user"
+                        SearchPlaceholder="Search..."
+                        NoResultsText="No results."
+                        CssClass="form-control" ItemCssClass="list-group-item-light" Height="200" />
+    </div>
+    <div class="col-6">
+        <label>Selected User</label>
+        <span class="form-control-plaintext">
+            @if (UserId != 0)
+            {
+                var selectedUser = users.FirstOrDefault(x => x.Id == UserId);
+                if (selectedUser != null)
+                {
+                    <span>@selectedUser.Name</span>
+                }
+            }
+        </span>
+    </div>
+</div>
 
 @code {
     private string selectedUser = string.Empty;

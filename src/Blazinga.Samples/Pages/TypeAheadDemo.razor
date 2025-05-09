@@ -1,0 +1,68 @@
+@page "/typeAheadDemo"
+@using Blazinga.Results
+
+<PageTitle>TypeAhead</PageTitle>
+<SectionContent SectionName="top-header">
+    TypeAhead
+</SectionContent>
+
+<div class="row">
+    <div class="col-6">
+        <label>Product</label>
+        <TypeAhead TItem="ProductSelectItem" TValue="int?"
+                   ValueSelector="item => item.Id" TextSelector="item => item.Name"
+                   ValueChanged="OnProductChanged"
+                   InitialText="@selectedProduct?.Name"
+                   SearchFunction="SearchProductAsync"
+                   CssClass="form-control"
+                   NoResultsText="No results." Placeholder="Search products..."
+                   Height="200" />
+    </div>
+    <div class="col-6">
+        <label>Selected Product</label>
+        <span class="form-control-plaintext">
+            @if (selectedProduct != null)
+            {
+                <span>@selectedProduct.Name</span>
+            }
+        </span>
+    </div>
+</div>
+
+@code {
+    private ProductSelectItem? selectedProduct = new();
+
+    private List<ProductSelectItem> products = new List<ProductSelectItem>()
+    {
+        new ProductSelectItem() { Id = 1, Name = "Product 1" },
+        new ProductSelectItem() { Id = 2, Name = "Product 2" },
+        new ProductSelectItem() { Id = 3, Name = "Product 3" },
+        new ProductSelectItem() { Id = 4, Name = "Product 4" },
+        new ProductSelectItem() { Id = 5, Name = "Product 5" },
+    };
+
+    private async Task<PagedResult<ProductSelectItem>> SearchProductAsync(string searchText, CancellationToken cancellationToken)
+    {
+        var result = new PagedResult<ProductSelectItem>();
+        result.TotalCount = products.Count;
+        if (string.IsNullOrEmpty(searchText)) return result;
+        result.Data.AddRange(products.Where(x => x.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)));
+        return await Task.FromResult(result);
+    }
+    private void OnProductChanged(int? productId)
+    {
+        if (productId.HasValue)
+        {
+            selectedProduct = products.FirstOrDefault(x => x.Id == productId.Value) ?? null;
+        }
+        else
+        {
+            selectedProduct = null;
+        }
+    }
+    private class ProductSelectItem
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+    }
+}

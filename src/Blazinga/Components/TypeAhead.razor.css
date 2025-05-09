@@ -1,0 +1,22 @@
+.reset-button {
+    position: absolute;
+    right: 1.3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    color: #6c757d;
+}
+
+    .reset-button:focus {
+        outline: none;
+    }
+
+.toggle-button {
+    position: absolute;
+    right: 0.3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #6c757d;
+}

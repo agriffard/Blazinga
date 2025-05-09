@@ -5,12 +5,18 @@
     EnumSelect
 </SectionContent>
 
-<p>
-    <label for="status">Status</label>
-    <EnumSelect id="status" @bind-Value="SelectedStatus" class="form-select" />
-</p>
-
-<p>Status: @SelectedStatus.GetLocalizedDisplayName()</p>
+<div class="row">
+    <div class="col-6">
+        <label for="status">Status</label>
+        <EnumSelect id="status" @bind-Value="SelectedStatus" class="form-select" />
+    </div>
+    <div class="col-6">
+        <label>Selected Status</label>
+        <span class="form-control-plaintext">
+            @SelectedStatus.GetLocalizedDisplayName()
+        </span>
+    </div>
+</div>
 
 @code {
     private Status SelectedStatus = Status.Closed;

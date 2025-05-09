@@ -9,11 +9,11 @@
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        @* <div class="nav-item px-3">
+        <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu mx-2" aria-hidden="true"></span> Home
+                <span class="bi bi-house mx-2" aria-hidden="true"></span> Home
             </NavLink>
-        </div> *@
+        </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="dropdownSelectDemo">
                 <span class="bi bi-list mx-2" aria-hidden="true"></span> DropdownSelect
@@ -27,6 +27,11 @@
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="multiSelectDemo">
                 <span class="bi bi-list-check mx-2" aria-hidden="true"></span> MultiSelect
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="typeAheadDemo">
+                <span class="bi bi-search mx-2" aria-hidden="true"></span> TypeAhead
             </NavLink>
         </div>
     </nav>

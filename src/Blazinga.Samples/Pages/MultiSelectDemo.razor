@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-6">
-        <label for="status">Tags</label>
+        <label>Tags</label>
         <MultiSelect TValue="int" TItem="TagModel" Items="@Tags"
                      SelectedValues="@SelectedTags"
                      SelectedValuesChanged="@OnSelectedTagsChanged"
@@ -16,7 +16,7 @@
                      Height="150" Placeholder="Select tags..." />
     </div>
     <div class="col-6">
-        <label for="status">Selected Tags</label>
+        <label>Selected Tags</label>
         <span class="form-control-plaintext">
             @foreach (var tag in Tags.Where(t => SelectedTags.Contains(t.Id)))
             {
