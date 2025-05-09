@@ -1,0 +1,13 @@
+<div class="col d-flex align-items-center">@* justify-content-end *@
+    <span>
+        @GetFirstItemIndex() - @GetLastItemIndex() / @TotalCount
+    </span>
+    <div class="btn-group">@* col-auto  *@
+        <button class="btn btn-outline " @onclick="PreviousPage">@* @(PageNumber <= 1 ? "disabled" : "") *@
+            <i class="bi bi-chevron-left" />
+        </button>
+        <button class="btn btn-outline " @onclick="NextPage">@* @(PageNumber >= totalPageCount ? "disabled" : "") *@
+            <i class="bi bi-chevron-right" />
+        </button>
+    </div>
+</div>

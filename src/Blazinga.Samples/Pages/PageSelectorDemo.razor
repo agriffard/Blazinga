@@ -1,0 +1,30 @@
+@page "/pageSelectorDemo"
+
+<PageTitle>PageSelector</PageTitle>
+<SectionContent SectionName="top-header">
+    PageSelector
+</SectionContent>
+
+<div class="row">
+    <div class="col-6">
+        <label>Change page</label>
+        <PageSelector @ref=pageSelector PageSize="@pageSize" PageChanged="OnPageChangedAsync" TotalCount="@totalCount" />
+    </div>
+    <div class="col-6">
+        <label>Current page</label>
+        <span class="form-control-plaintext">
+            @pageSelector.PageNumber
+        </span>
+    </div>
+</div>
+
+@code {
+    private PageSelector pageSelector = new();
+    private int pageSize = 10;
+    private int totalCount = 100;
+
+    private async Task OnPageChangedAsync()
+    {
+        
+    }
+}
