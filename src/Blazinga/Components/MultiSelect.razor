@@ -21,11 +21,8 @@
         {
             <span class="text-muted">@Placeholder</span>
         }
-        @* <span class="float-end">
-            <span class="dropdown-toggle"></span>
-        </span> *@
     </div>
-    @* <button type="button" class="toggle-button" @onclick="ToggleDropdown" tabindex="-1">
+    <button type="button" class="btn toggle-button" @onclick="ToggleDropdown" tabindex="-1">
         @if (IsDropdownVisible)
         {
             <i class="bi bi-chevron-up"></i>
@@ -34,7 +31,7 @@
         {
             <i class="bi bi-chevron-down"></i>
         }
-    </button> *@
+    </button>
 
     @if (IsDropdownVisible)
     {
@@ -53,30 +50,3 @@
         </div>
     }
 </div>
-
-@code {    
-    // private RenderFragment<TItem> RenderItem => item =>
-    //     @<div class="dropdown-item" @onclick="() => ToggleOption(item)">
-    //         <label @onclick:stopPropagation="true">
-    //             <input type="checkbox" checked="@IsOptionSelected(item)"
-    //                    @onchange="() => ToggleOption(item)"/> @TextSelector(item)
-    //         </label>
-    //     </div>;
-
-    // private async Task ToggleOption(TItem option)
-    // {
-    //     var newSelected = new List<TItem>(SelectedValues);
-    //     if (!newSelected.Remove(option))
-    //     {
-    //         newSelected.Add(option);
-    //     }
-
-    //     SelectedValues = newSelected;
-    //     await SelectedValuesChanged.InvokeAsync(SelectedValues);
-    // }
-
-    // private bool IsSelected(TItem value)
-    // {
-    //     return SelectedValues.Contains(value);
-    // }
-}

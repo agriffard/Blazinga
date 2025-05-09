@@ -1,14 +1,8 @@
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-
 namespace Blazinga.Components;
 /// <summary>
 /// MultiSelect component.
 /// </summary>
-/// <remarks>ClickHandler inspired by https://github.com/BorisGerretzen/SimpleBlazorMultiselect</remarks>
+/// <remarks>Inspired by https://github.com/BorisGerretzen/SimpleBlazorMultiselect</remarks>
 public partial class MultiSelect<TItem, TValue>
 {
     [Parameter] public string Placeholder { get; set; }
@@ -94,4 +88,29 @@ public partial class MultiSelect<TItem, TValue>
         SelectedValues.Remove(value);
         SelectedValuesChanged.InvokeAsync(SelectedValues);
     }
+
+    // private RenderFragment<TItem> RenderItem => item =>
+    //     @<div class="dropdown-item" @onclick="() => ToggleOption(item)">
+    //         <label @onclick:stopPropagation="true">
+    //             <input type="checkbox" checked="@IsSelected(item)"
+    //                    @onchange="() => ToggleOption(item)"/> @TextSelector(item)
+    //         </label>
+    //     </div>;
+
+    // private async Task ToggleOption(TItem option)
+    // {
+    //     var newSelected = new List<TItem>(SelectedValues);
+    //     if (!newSelected.Remove(option))
+    //     {
+    //         newSelected.Add(option);
+    //     }
+
+    //     SelectedValues = newSelected;
+    //     await SelectedValuesChanged.InvokeAsync(SelectedValues);
+    // }
+
+    // private bool IsSelected(TItem value)
+    // {
+    //     return SelectedValues.Contains(value);
+    // }
 }
