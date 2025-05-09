@@ -1,0 +1,64 @@
+/* _content/Blazinga/Components/MultiSelect.razor.rz.scp.css */
+.selected-items[b-7muygqv6t7] {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+}
+
+.selected-badge[b-7muygqv6t7] {
+    margin-right: 0.5rem;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.remove-badge[b-7muygqv6t7] {
+    border: none;
+    background: transparent;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.list-group-item > label[b-7muygqv6t7] {
+    cursor: pointer;
+}
+
+.list-group-item:hover[b-7muygqv6t7] {
+    background-color: var(--bs-tertiary-bg);
+}
+
+.toggle-button[b-7muygqv6t7] {
+    position: absolute;
+    right: 0.3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #6c757d;
+}
+/* _content/Blazinga/Components/TypeAhead.razor.rz.scp.css */
+.reset-button[b-j6wb6j9b9t] {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    color: #6c757d;
+}
+
+    .reset-button:focus[b-j6wb6j9b9t] {
+        outline: none;
+    }
+
+.toggle-button[b-j6wb6j9b9t] {
+    position: absolute;
+    right: 0.3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #6c757d;
+}
