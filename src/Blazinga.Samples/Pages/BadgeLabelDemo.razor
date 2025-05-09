@@ -1,0 +1,30 @@
+@page "/badgeLabelDemo"
+
+<PageTitle>BadgeLabel</PageTitle>
+<SectionContent SectionName="top-header">
+    BadgeLabel
+</SectionContent>
+
+<div class="row">
+    <div class="col-6">
+        <label>CssClass</label>
+        <select @bind="@cssClass" class="form-select">
+            <option value="primary">Primary</option>
+            <option value="secondary">Secondary</option>
+            <option value="info">Info</option>
+            <option value="success">Success</option>
+            <option value="warning">Warning</option>
+            <option value="danger">Danger</option>
+        </select>
+    </div>
+    <div class="col-6">
+        <label>Alert</label>
+        <span class="form-control-plaintext">
+            <BadgeLabel CssClass="@cssClass">Badge</BadgeLabel>
+        </span>
+    </div>
+</div>
+
+@code {
+    private string cssClass = "primary";
+}
