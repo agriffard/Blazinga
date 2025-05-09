@@ -1,11 +1,13 @@
 @page "/multiSelectDemo"
 
 <PageTitle>MultiSelect</PageTitle>
+<SectionContent SectionName="top-header">
+    MultiSelect
+</SectionContent>
 
-<h1>MultiSelect</h1>
 <div class="row">
     <div class="col-6">
-        <label for="status">MultiSelect</label>
+        <label for="status">Tags</label>
         <MultiSelect TValue="int" TItem="TagModel" Items="@Tags"
                      SelectedValues="@SelectedTags"
                      SelectedValuesChanged="@OnSelectedTagsChanged"
@@ -15,12 +17,12 @@
     </div>
     <div class="col-6">
         <label for="status">Selected Tags</label>
-        <ul class="list-unstyled">
+        <span class="form-control-plaintext">
             @foreach (var tag in Tags.Where(t => SelectedTags.Contains(t.Id)))
             {
-                <li>@tag.Title</li>
+                <span class="badge bg-primary text-white me-2">@tag.Title</span>
             }
-        </ul>
+        </span>
     </div>
 </div>
 

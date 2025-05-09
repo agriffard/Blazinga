@@ -1,25 +1,40 @@
 @inject ThemeService ThemeService
 @inject IJSRuntime JS
+@inject NavigationManager Nav
 
 <div class="top-row px-4">
+    <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav">
+        <li class="nav-item">
+            <h2 class="mt-2"><SectionOutlet SectionName="top-header" /></h2>
+        </li>
+    </ul>
     <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">
+                <i class="bi bi-translate me-2"></i> @* @CultureInfo.CurrentUICulture.DisplayName *@
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><button class="dropdown-item" @onclick="@(() => SetCultureAsync("en"))">English</button></li>
+                <li><button class="dropdown-item" @onclick="@(() => SetCultureAsync("fr"))">Français</button></li>
+            </ul>
+        </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle d-flex align-items-center" style="text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-@GetThemeCssClass()"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
                 <li>
-                    <button class="dropdown-item d-flex align-items-center" @onclick="() => SetThemeLightAsync()">
+                    <button class="dropdown-item d-flex align-items-center" @onclick="@(() => SetThemeAsync("light"))">
                         <i class="bi bi-sun-fill me-2"></i> Light
                     </button>
                 </li>
                 <li>
-                    <button class="dropdown-item d-flex align-items-center" @onclick="() => SetThemeDarkAsync()">
+                    <button class="dropdown-item d-flex align-items-center" @onclick="@(() => SetThemeAsync("dark"))">
                         <i class="bi bi-moon-stars-fill me-2"></i> Dark
                     </button>
                 </li>
                 <li>
-                    <button class="dropdown-item d-flex align-items-center" @onclick="() => SetThemeAutoAsync()">
+                    <button class="dropdown-item d-flex align-items-center" @onclick="@(() => SetThemeAsync("auto"))">
                         <i class="bi bi-circle-half me-2"></i> Auto
                     </button>
                 </li>
@@ -29,6 +44,12 @@
 </div>
 
 @code {
+    private async Task SetCultureAsync(string culture)
+    {
+        await JS.InvokeVoidAsync("localStorage.setItem", "culture", culture);
+        Nav.NavigateTo(Nav.Uri, forceLoad: true);
+    }
+
     private string GetThemeCssClass()
     {
         return ThemeService.CurrentTheme switch
@@ -42,18 +63,5 @@
     private async Task SetThemeAsync(string theme)
     {
         await ThemeService.SetThemeAsync(theme);
-        StateHasChanged(); // update icon if needed
-    }
-    private async Task SetThemeLightAsync()
-    {
-        await SetThemeAsync("light");
-    }
-    private async Task SetThemeDarkAsync()
-    {
-        await SetThemeAsync("dark");
-    }
-    private async Task SetThemeAutoAsync()
-    {
-        await SetThemeAsync("auto");
     }
 }
