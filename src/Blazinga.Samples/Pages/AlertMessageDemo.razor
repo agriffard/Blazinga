@@ -1,0 +1,33 @@
+@page "/alertMessageDemo"
+
+<PageTitle>AlertMessage</PageTitle>
+<SectionContent SectionName="top-header">
+    AlertMessage
+</SectionContent>
+
+<div class="row">
+    <div class="col-4">
+        <label>Message</label>
+        <InputTextArea @bind-Value="@message" class="form-control" rows="2" />
+    </div>
+    <div class="col-4">
+        <label>CssClass</label>
+        <select @bind="@messageType" class="form-select">
+            <option value="info">Info</option>
+            <option value="success">Success</option>
+            <option value="warning">Warning</option>
+            <option value="danger">Danger</option>
+        </select>
+    </div>
+    <div class="col-4">
+        <label>Alert</label>
+        <span class="form-control-plaintext">
+                <AlertMessage Message="@message" CssClass="@messageType" />
+        </span>
+    </div>
+</div>
+
+@code {
+    private string message = "Test message";
+    private string messageType = "info";
+}
