@@ -1,0 +1,10 @@
+@* https://stackoverflow.com/questions/76829035/how-to-show-a-number-input-bind-to-a-double-property-as-percentage-or-dollars-in *@
+@using System.Linq.Expressions;
+
+<div class="input-group">
+    <InputNumber class="@Class"
+                 Value="_value"
+                 ValueChanged="(double value) => this.OnValueChanged(value)"
+                 ValueExpression="ValueExpression" />
+    <span class="input-group-text @GroupClass">%</span>
+</div>
