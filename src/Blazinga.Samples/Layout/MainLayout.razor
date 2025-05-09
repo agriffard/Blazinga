@@ -1,7 +1,7 @@
 @inherits LayoutComponentBase
-
+@inject NavMenuStateService NavState
 <div class="page">
-    <div class="sidebar">
+    <div class="sidebar @NavMenuCssClass">
         <NavMenu />
     </div>
 
@@ -13,3 +13,18 @@
         </article>
     </main>
 </div>
+
+@code {
+    private string? NavMenuCssClass => NavState.IsCollapsed ? "d-none" : "d-block";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await NavState.InitializeAsync();
+        NavState.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        NavState.OnChange -= StateHasChanged;
+    }
+}

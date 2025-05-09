@@ -1,0 +1,22 @@
+@inject ThemeService ThemeService
+
+<a class="nav-link dropdown-toggle d-flex align-items-center" style="text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="bi bi-@GetThemeCssClass()"></i>
+</a>
+<ul class="dropdown-menu dropdown-menu-end">
+    <li>
+        <button class="dropdown-item d-flex align-items-center" @onclick="@(() => SetThemeAsync("light"))">
+            <i class="bi bi-sun-fill me-2"></i> Light
+        </button>
+    </li>
+    <li>
+        <button class="dropdown-item d-flex align-items-center" @onclick="@(() => SetThemeAsync("dark"))">
+            <i class="bi bi-moon-stars-fill me-2"></i> Dark
+        </button>
+    </li>
+    <li>
+        <button class="dropdown-item d-flex align-items-center" @onclick="@(() => SetThemeAsync("auto"))">
+            <i class="bi bi-circle-half me-2"></i> Auto
+        </button>
+    </li>
+</ul>

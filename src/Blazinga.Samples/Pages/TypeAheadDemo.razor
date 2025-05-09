@@ -14,7 +14,7 @@
                    InitialText="@selectedProduct?.Name"
                    SearchFunction="SearchProductAsync"
                    CssClass="form-control"
-                   NoResultsText="No results." Placeholder="Search products..."
+                   NoResultsText="No results." Placeholder="Search..."
                    Height="200" />
     </div>
     <div class="col-6">
@@ -30,21 +30,30 @@
 
 @code {
     private ProductModel? selectedProduct = new();
+    private List<ProductModel> products = new List<ProductModel>();
 
-    private List<ProductModel> products = new List<ProductModel>()
+    protected override void OnInitialized()
     {
-        new ProductModel() { Id = 1, Name = "Product 1" },
-        new ProductModel() { Id = 2, Name = "Product 2" },
-        new ProductModel() { Id = 3, Name = "Product 3" },
-        new ProductModel() { Id = 4, Name = "Product 4" },
-        new ProductModel() { Id = 5, Name = "Product 5" },
-    };
+        products = new List<ProductModel>()
+        {
+            new ProductModel { Id = 1, Name = "Product 1" },
+            new ProductModel { Id = 2, Name = "Product 2" },
+            new ProductModel { Id = 3, Name = "Product 3" },
+            new ProductModel { Id = 4, Name = "Product 4" },
+            new ProductModel { Id = 5, Name = "Product 5" },
+        };
+        //selectedProduct = products.FirstOrDefault();
+    }
 
     private async Task<List<ProductModel>> SearchProductAsync(string searchText, CancellationToken cancellationToken)
     {
+        if (string.IsNullOrEmpty(searchText))
+        {
+            return products;
+        }
         var result = new List<ProductModel>();
-        if (string.IsNullOrEmpty(searchText)) return result;
         result = products.Where(x => x.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
         return await Task.FromResult(result);
     }
 

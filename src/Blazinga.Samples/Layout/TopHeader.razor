@@ -1,73 +1,16 @@
-@inject ThemeService ThemeService
-@inject IJSRuntime JS
-@inject NavigationManager Nav
-
-<div class="top-row px-4">
+<div class="top-row">
+    <CollapseButton />
     <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav">
         <li class="nav-item">
-            <h2 class="mt-2"><SectionOutlet SectionName="top-header" /></h2>
+            <h1 class="mt-2"><SectionOutlet SectionName="top-header" /></h1>
         </li>
     </ul>
     <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">
-                <i class="bi bi-translate me-2"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><button class="dropdown-item @(currentCulture == "en" ? "active" : "")" @onclick="@(() => SetCultureAsync("en"))">English</button></li>
-                <li><button class="dropdown-item @(currentCulture == "fr" ? "active" : "")" @onclick="@(() => SetCultureAsync("fr"))">Français</button></li>
-            </ul>
+            <CultureSwitcher />
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle d-flex align-items-center" style="text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-@GetThemeCssClass()"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                    <button class="dropdown-item d-flex align-items-center" @onclick="@(() => SetThemeAsync("light"))">
-                        <i class="bi bi-sun-fill me-2"></i> Light
-                    </button>
-                </li>
-                <li>
-                    <button class="dropdown-item d-flex align-items-center" @onclick="@(() => SetThemeAsync("dark"))">
-                        <i class="bi bi-moon-stars-fill me-2"></i> Dark
-                    </button>
-                </li>
-                <li>
-                    <button class="dropdown-item d-flex align-items-center" @onclick="@(() => SetThemeAsync("auto"))">
-                        <i class="bi bi-circle-half me-2"></i> Auto
-                    </button>
-                </li>
-            </ul>
+            <ThemeSwitcher />
         </li>
     </ul>
 </div>
-
-@code {
-    private string currentCulture = string.Empty;
-    protected override async Task OnInitializedAsync()
-    {
-        currentCulture = CultureInfo.CurrentUICulture.Name; //await JS.InvokeAsync<string>("localStorage.getItem", "culture");
-    }
-
-    private async Task SetCultureAsync(string culture)
-    {
-        await JS.InvokeVoidAsync("localStorage.setItem", "culture", culture);
-        Nav.NavigateTo(Nav.Uri, forceLoad: true);
-    }
-
-    private string GetThemeCssClass()
-    {
-        return ThemeService.CurrentTheme switch
-        {
-            "light" => "sun-fill",
-            "dark" => "moon-stars-fill",
-            _ => "circle-half"
-        };
-    }
-
-    private async Task SetThemeAsync(string theme)
-    {
-        await ThemeService.SetThemeAsync(theme);
-    }
-}

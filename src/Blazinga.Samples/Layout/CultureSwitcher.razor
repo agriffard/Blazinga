@@ -1,0 +1,25 @@
+@inject IJSRuntime JS
+@inject NavigationManager Nav
+
+<a class="nav-link dropdown-toggle me-2" data-bs-toggle="dropdown" href="#" role="button">
+    <i class="bi bi-translate"></i>
+</a>
+<ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item @(currentCulture == "en" ? "active" : "")" @onclick="@(() => SetCultureAsync("en"))">English</button></li>
+    <li><button class="dropdown-item @(currentCulture == "fr" ? "active" : "")" @onclick="@(() => SetCultureAsync("fr"))">Français</button></li>
+</ul>
+
+@code {
+    private string currentCulture = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        currentCulture = CultureInfo.CurrentUICulture.Name; //await JS.InvokeAsync<string>("localStorage.getItem", "culture");
+    }
+
+    private async Task SetCultureAsync(string culture)
+    {
+        await JS.InvokeVoidAsync("localStorage.setItem", "culture", culture);
+        Nav.NavigateTo(Nav.Uri, forceLoad: true);
+    }
+}
