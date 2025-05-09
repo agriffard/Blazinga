@@ -11,11 +11,11 @@
     <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">
-                <i class="bi bi-translate me-2"></i> @* @CultureInfo.CurrentUICulture.DisplayName *@
+                <i class="bi bi-translate me-2"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-                <li><button class="dropdown-item" @onclick="@(() => SetCultureAsync("en"))">English</button></li>
-                <li><button class="dropdown-item" @onclick="@(() => SetCultureAsync("fr"))">Français</button></li>
+                <li><button class="dropdown-item @(currentCulture == "en" ? "active" : "")" @onclick="@(() => SetCultureAsync("en"))">English</button></li>
+                <li><button class="dropdown-item @(currentCulture == "fr" ? "active" : "")" @onclick="@(() => SetCultureAsync("fr"))">Français</button></li>
             </ul>
         </li>
         <li class="nav-item dropdown">
@@ -44,6 +44,12 @@
 </div>
 
 @code {
+    private string currentCulture = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        currentCulture = CultureInfo.CurrentUICulture.Name; //await JS.InvokeAsync<string>("localStorage.getItem", "culture");
+    }
+
     private async Task SetCultureAsync(string culture)
     {
         await JS.InvokeVoidAsync("localStorage.setItem", "culture", culture);
