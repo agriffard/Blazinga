@@ -1,5 +1,4 @@
 @page "/typeAheadDemo"
-@using Blazinga.Results
 
 <PageTitle>TypeAhead</PageTitle>
 <SectionContent SectionName="top-header">
@@ -41,14 +40,14 @@
         new ProductSelectItem() { Id = 5, Name = "Product 5" },
     };
 
-    private async Task<PagedResult<ProductSelectItem>> SearchProductAsync(string searchText, CancellationToken cancellationToken)
+    private async Task<List<ProductSelectItem>> SearchProductAsync(string searchText, CancellationToken cancellationToken)
     {
-        var result = new PagedResult<ProductSelectItem>();
-        result.TotalCount = products.Count;
+        var result = new List<ProductSelectItem>();
         if (string.IsNullOrEmpty(searchText)) return result;
-        result.Data.AddRange(products.Where(x => x.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)));
+        result = products.Where(x => x.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
         return await Task.FromResult(result);
     }
+
     private void OnProductChanged(int? productId)
     {
         if (productId.HasValue)
@@ -60,6 +59,7 @@
             selectedProduct = null;
         }
     }
+
     private class ProductSelectItem
     {
         public int Id { get; set; }

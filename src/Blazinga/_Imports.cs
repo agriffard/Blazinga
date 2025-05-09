@@ -7,7 +7,6 @@ global using System.Linq.Expressions;
 global using System.Resources;
 global using System.Threading;
 global using System.Threading.Tasks;
-global using Blazinga.Results;
 global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Web;
 

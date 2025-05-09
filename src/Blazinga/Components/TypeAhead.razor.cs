@@ -1,7 +1,7 @@
 namespace Blazinga.Components;
 public partial class TypeAhead<TItem, TValue>
 {
-    [Parameter] public Func<string, CancellationToken, Task<PagedResult<TItem>>> SearchFunction { get; set; }
+    [Parameter] public Func<string, CancellationToken, Task<List<TItem>>> SearchFunction { get; set; }
     [Parameter] public EventCallback OnReset { get; set; }
     [Parameter] public string NoResultsText { get; set; } // = SharedResource.NoResults;
     [Parameter] public string Placeholder { get; set; }
@@ -16,7 +16,7 @@ public partial class TypeAhead<TItem, TValue>
     [Parameter] public string InitialText { get; set; }
     public string Text { get; set; }
     public TItem SelectedItem { get; set; }
-    private PagedResult<TItem> FilteredItems { get; set; } = new();
+    private List<TItem> FilteredItems { get; set; } = new();
     private bool IsDropdownVisible { get; set; }
 
     private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
@@ -39,7 +39,7 @@ public partial class TypeAhead<TItem, TValue>
         try
         {
             FilteredItems = await GetFilteredItems(Text);
-            IsDropdownVisible = FilteredItems.Data.Count > 0;
+            IsDropdownVisible = FilteredItems.Count > 0;
         }
         catch (InvalidOperationException ioex)
         {
@@ -53,7 +53,7 @@ public partial class TypeAhead<TItem, TValue>
         IsDropdownVisible = false;
     }
 
-    private async Task<PagedResult<TItem>> GetFilteredItems(string text)
+    private async Task<List<TItem>> GetFilteredItems(string text)
     {
         // Cancel the previous search operation
         _cancellationTokenSource.Cancel();
@@ -65,7 +65,7 @@ public partial class TypeAhead<TItem, TValue>
     private async Task ToggleDropdown()
     {
         //if opening for the first time, fetch datas
-        if (!IsDropdownVisible && string.IsNullOrEmpty(Text) && FilteredItems.TotalCount == 0)
+        if (!IsDropdownVisible && string.IsNullOrEmpty(Text) && FilteredItems.Count == 0)
         {
             FilteredItems = await GetFilteredItems(Text);
         }
