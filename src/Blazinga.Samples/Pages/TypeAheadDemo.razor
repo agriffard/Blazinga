@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-6">
         <label>Product</label>
-        <TypeAhead TItem="ProductSelectItem" TValue="int?"
+        <TypeAhead TItem="ProductModel" TValue="int?"
                    ValueSelector="item => item.Id" TextSelector="item => item.Name"
                    ValueChanged="OnProductChanged"
                    InitialText="@selectedProduct?.Name"
@@ -29,20 +29,20 @@
 </div>
 
 @code {
-    private ProductSelectItem? selectedProduct = new();
+    private ProductModel? selectedProduct = new();
 
-    private List<ProductSelectItem> products = new List<ProductSelectItem>()
+    private List<ProductModel> products = new List<ProductModel>()
     {
-        new ProductSelectItem() { Id = 1, Name = "Product 1" },
-        new ProductSelectItem() { Id = 2, Name = "Product 2" },
-        new ProductSelectItem() { Id = 3, Name = "Product 3" },
-        new ProductSelectItem() { Id = 4, Name = "Product 4" },
-        new ProductSelectItem() { Id = 5, Name = "Product 5" },
+        new ProductModel() { Id = 1, Name = "Product 1" },
+        new ProductModel() { Id = 2, Name = "Product 2" },
+        new ProductModel() { Id = 3, Name = "Product 3" },
+        new ProductModel() { Id = 4, Name = "Product 4" },
+        new ProductModel() { Id = 5, Name = "Product 5" },
     };
 
-    private async Task<List<ProductSelectItem>> SearchProductAsync(string searchText, CancellationToken cancellationToken)
+    private async Task<List<ProductModel>> SearchProductAsync(string searchText, CancellationToken cancellationToken)
     {
-        var result = new List<ProductSelectItem>();
+        var result = new List<ProductModel>();
         if (string.IsNullOrEmpty(searchText)) return result;
         result = products.Where(x => x.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
         return await Task.FromResult(result);
@@ -58,11 +58,5 @@
         {
             selectedProduct = null;
         }
-    }
-
-    private class ProductSelectItem
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
     }
 }

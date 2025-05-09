@@ -1,0 +1,22 @@
+@typeparam TItem
+
+<div>
+    @if (Items != null)
+    {
+        foreach (var item in Items)
+        {
+            var Text = TextField?.Invoke(item);
+            var Value = ValueField?.Invoke(item);
+            bool Checked = false;
+            if (SelectedValues.Contains(Value.Value))
+            {
+                Checked = true;
+            }
+            <div class="form-check">
+                <input type="checkbox" checked=@Checked class="form-check-input" id="cb-@(Value.Value)"
+                       @onchange="eventArgs => { OnChange(Value.Value, eventArgs.Value); }"/>
+                <label class="form-check-label" for="cb-@(Value.Value)" onclick="event.stopPropagation()">@Text</label>
+            </div>
+        }
+    }
+</div>

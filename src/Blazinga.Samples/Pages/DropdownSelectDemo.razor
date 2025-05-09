@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-6">
         <label>User</label>
-        <DropdownSelect TItem="UserSelectItem"
+        <DropdownSelect TItem="UserModel"
                         Items="users"
                         TValue="int"
                         @bind-Value="UserId"
@@ -38,18 +38,12 @@
 @code {
     private string selectedUser = string.Empty;
     private int UserId { get; set; } = 1;
-    private List<UserSelectItem> users = new List<UserSelectItem>()
+    private List<UserModel> users = new List<UserModel>()
     {
-        new UserSelectItem() { Id = 1, Name = "John Doe" },
-        new UserSelectItem() { Id = 2, Name = "Jane Smith" },
-        new UserSelectItem() { Id = 3, Name = "Alice Johnson" },
-        new UserSelectItem() { Id = 4, Name = "Bob Brown" },
-        new UserSelectItem() { Id = 5, Name = "Charlie Black" },
+        new UserModel() { Id = 1, Name = "John Doe" },
+        new UserModel() { Id = 2, Name = "Jane Smith" },
+        new UserModel() { Id = 3, Name = "Alice Johnson" },
+        new UserModel() { Id = 4, Name = "Bob Brown" },
+        new UserModel() { Id = 5, Name = "Charlie Black" },
     };
-
-    private class UserSelectItem
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-    }
 }

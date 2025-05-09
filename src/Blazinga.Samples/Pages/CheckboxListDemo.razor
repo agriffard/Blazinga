@@ -1,0 +1,37 @@
+@page "/checkboxListDemo"
+
+<PageTitle>CheckboxList</PageTitle>
+<SectionContent SectionName="top-header">
+    CheckboxList
+</SectionContent>
+
+<div class="row">
+    <div class="col-6">
+        <label>Status</label>
+        <CheckboxList Items="Users" TItem="UserModel"
+                      ValueField="item => item.Id"
+                      TextField="item => item.Name"
+                      @bind-SelectedValues="userIds" />
+    </div>
+    <div class="col-6">
+        <label>Selected Users</label>
+        <ul>
+            @foreach (var user in Users.Where(u => userIds.Contains(u.Id)))
+            {
+                <li>@user.Name</li>
+            }
+        </ul>
+    </div>
+</div>
+
+@code {
+    private List<UserModel> Users = new List<UserModel>()
+    {
+        new UserModel { Id = 1, Name = "User 1" },
+        new UserModel { Id = 2, Name = "User 2" },
+        new UserModel { Id = 3, Name = "User 3" },
+        new UserModel { Id = 4, Name = "User 4" },
+        new UserModel { Id = 5, Name = "User 5" },
+    };
+    private int[] userIds { get; set; } = new int[] { };
+}
