@@ -6,7 +6,7 @@
 </SectionContent>
 
 <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
         <label>Tags</label>
         <MultiSelect TValue="int" TItem="TagModel" Items="@Tags"
                      SelectedValues="@SelectedTags"
@@ -15,7 +15,7 @@
                      TextSelector="@(x => x.Title)"
                      Height="150" Placeholder="Select tags..." />
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
         <label>Selected Tags</label>
         <span class="form-control-plaintext">
             @foreach (var tag in Tags.Where(t => SelectedTags.Contains(t.Id)))

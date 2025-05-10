@@ -12,7 +12,7 @@ public partial class GitHubSourceLink
     private void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
     {
         UpdateSourceUrl(e.Location);
-        InvokeAsync(StateHasChanged); // Refresh UI
+        InvokeAsync(StateHasChanged);
     }
 
     private void UpdateSourceUrl(string uri)

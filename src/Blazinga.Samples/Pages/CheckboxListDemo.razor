@@ -6,14 +6,14 @@
 </SectionContent>
 
 <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
         <label>Users</label>
         <CheckboxList Items="Users" TItem="UserModel"
                       ValueField="item => item.Id"
                       TextField="item => item.Name"
                       @bind-SelectedValues="userIds" />
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
         <label>Selected Users</label>
         <ul>
             @foreach (var user in Users.Where(u => userIds.Contains(u.Id)))

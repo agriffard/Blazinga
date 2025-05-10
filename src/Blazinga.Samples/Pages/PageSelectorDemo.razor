@@ -6,11 +6,11 @@
 </SectionContent>
 
 <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
         <label>Change page</label>
         <PageSelector @ref=pageSelector PageSize="@pageSize" PageChanged="OnPageChangedAsync" TotalCount="@totalCount" />
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
         <label>Current page</label>
         <span class="form-control-plaintext">
             @pageSelector.PageNumber

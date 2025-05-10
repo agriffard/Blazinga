@@ -6,7 +6,7 @@
 </SectionContent>
 
 <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
         <label>CssClass</label>
         <select @bind="@cssClass" class="form-select">
             <option value="alert-primary">Primary</option>
@@ -17,7 +17,7 @@
             <option value="alert-danger">Danger</option>
         </select>
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
         <label>Alert</label>
         <span class="form-control-plaintext">
             <AlertMessage CssClass="@cssClass">@message</AlertMessage>

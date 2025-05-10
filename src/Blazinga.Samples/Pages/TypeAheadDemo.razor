@@ -6,7 +6,7 @@
 </SectionContent>
 
 <div class="row">
-    <div class="col-6">
+    <div class="col-md-6">
         <label>Product</label>
         <TypeAhead TItem="ProductModel" TValue="int?"
                    ValueSelector="item => item.Id" TextSelector="item => item.Name"
@@ -17,7 +17,7 @@
                    NoResultsText="No results." Placeholder="Search..."
                    Height="200" />
     </div>
-    <div class="col-6">
+    <div class="col-md-6">
         <label>Selected Product</label>
         <span class="form-control-plaintext">
             @if (selectedProduct != null)
