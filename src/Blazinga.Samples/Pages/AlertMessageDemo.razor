@@ -6,30 +6,26 @@
 </SectionContent>
 
 <div class="row">
-    @* <div class="col-4">
-        <label>Message</label>
-        <InputTextArea @bind-Value="@message" class="form-control" rows="2" />
-    </div> *@
     <div class="col-6">
         <label>CssClass</label>
         <select @bind="@cssClass" class="form-select">
-            <option value="text-bg-primary">Primary</option>
-            <option value="text-bg-secondary">Secondary</option>
-            <option value="text-bg-info">Info</option>
-            <option value="text-bg-success">Success</option>
-            <option value="text-bg-warning">Warning</option>
-            <option value="text-bg-danger">Danger</option>
+            <option value="alert-primary">Primary</option>
+            <option value="alert-secondary">Secondary</option>
+            <option value="alert-info">Info</option>
+            <option value="alert-success">Success</option>
+            <option value="alert-warning">Warning</option>
+            <option value="alert-danger">Danger</option>
         </select>
     </div>
     <div class="col-6">
         <label>Alert</label>
         <span class="form-control-plaintext">
-                <AlertMessage Message="@message" CssClass="@cssClass" />
+            <AlertMessage CssClass="@cssClass">@message</AlertMessage>
         </span>
     </div>
 </div>
 
 @code {
     private string message = "Test message";
-    private string cssClass = "primary";
+    private string cssClass = "alert-primary";
 }

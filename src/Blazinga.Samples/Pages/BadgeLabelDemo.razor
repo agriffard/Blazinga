@@ -9,16 +9,16 @@
     <div class="col-6">
         <label>CssClass</label>
         <select @bind="@cssClass" class="form-select">
-            <option value="primary">Primary</option>
-            <option value="secondary">Secondary</option>
-            <option value="info">Info</option>
-            <option value="success">Success</option>
-            <option value="warning">Warning</option>
-            <option value="danger">Danger</option>
+            <option value="text-bg-primary">Primary</option>
+            <option value="text-bg-secondary">Secondary</option>
+            <option value="text-bg-info">Info</option>
+            <option value="text-bg-success">Success</option>
+            <option value="text-bg-warning">Warning</option>
+            <option value="text-bg-danger">Danger</option>
         </select>
     </div>
     <div class="col-6">
-        <label>Alert</label>
+        <label>Badge</label>
         <span class="form-control-plaintext">
             <BadgeLabel CssClass="@cssClass">Badge</BadgeLabel>
         </span>
@@ -26,5 +26,5 @@
 </div>
 
 @code {
-    private string cssClass = "primary";
+    private string cssClass = "text-bg-primary";
 }

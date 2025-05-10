@@ -1,0 +1,10 @@
+@inject NavigationManager Navigation
+
+@if (!string.IsNullOrEmpty(SourceUrl))
+{
+    <div class="mt-1">
+        <a href="@SourceUrl" target="_blank" rel="noopener" class="btn btn-outline">
+            <i class="bi bi-github"></i> @* View source on GitHub *@
+        </a>
+    </div>
+}

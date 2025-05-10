@@ -1,6 +1,6 @@
-@if (!string.IsNullOrEmpty(Message))
+@if (ChildContent != null)
 {
-    <div class="alert alert-@CssClass" role="alert">
-        @Message
+    <div class="alert @CssClass" role="alert">
+        @ChildContent
     </div>
 }
