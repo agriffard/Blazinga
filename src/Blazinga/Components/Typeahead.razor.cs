@@ -1,28 +1,28 @@
 namespace Blazinga.Components;
 public partial class Typeahead<TItem>
 {
-    [Parameter] public Func<string, Task<List<TItem>>> SearchFunction { get; set; } = default!;
-    [Parameter] public EventCallback<TItem?> SelectedChanged { get; set; }
     [Parameter] public Func<TItem, string> ItemSelector { get; set; } = item => item?.ToString() ?? string.Empty;
+    [Parameter] public RenderFragment<TItem>? ItemTemplate { get; set; }
     [Parameter] public string Placeholder { get; set; } = "Search...";
-    [Parameter] public TItem? SelectedItem { get; set; }
+    [Parameter] public Func<string, Task<List<TItem>>> SearchFunction { get; set; } = default!;
+    [Parameter] public EventCallback<List<TItem>> SelectedChanged { get; set; }
+    [Parameter] public List<TItem> SelectedItems { get; set; } = new();
 
     private List<TItem> FilteredItems { get; set; } = new();
     private string SearchText { get; set; } = string.Empty;
     private bool ShowSuggestions { get; set; } = false;
     private CancellationTokenSource? DebounceCts;
-
-    protected override async Task OnParametersSetAsync()
-    {
-        if (SelectedItem != null)
-        {
-            SearchText = ItemSelector(SelectedItem);
-        }
-    }
+    private ElementReference inputRef;
 
     private async Task ShowDropdown()
     {
         ShowSuggestions = true;
+        await RefreshSuggestions();
+    }
+
+    private async Task OnInput(ChangeEventArgs e)
+    {
+        SearchText = e.Value?.ToString() ?? string.Empty;
         await RefreshSuggestions();
     }
 
@@ -34,14 +34,20 @@ public partial class Typeahead<TItem>
 
         try
         {
-            await Task.Delay(200, token);
+            await Task.Delay(250, token);
             if (SearchFunction is not null)
             {
                 FilteredItems = await SearchFunction(SearchText);
+                FilteredItems = FilteredItems
+                    .Where(item => !SelectedItems.Any(sel => ItemSelector(sel) == ItemSelector(item)))
+                    .ToList();
             }
             //if (!string.IsNullOrWhiteSpace(SearchText) && SearchFunction is not null)
             //{
             //    FilteredItems = await SearchFunction(SearchText);
+            //    FilteredItems = FilteredItems
+            //        .Where(item => !SelectedItems.Any(sel => ItemSelector(sel) == ItemSelector(item)))
+            //        .ToList();
             //}
             //else
             //{
@@ -56,24 +62,30 @@ public partial class Typeahead<TItem>
 
     private async Task SelectItem(TItem item)
     {
-        SelectedItem = item;
-        SearchText = ItemSelector(item);
-        ShowSuggestions = false;
-        await SelectedChanged.InvokeAsync(item);
-    }
+        if (!SelectedItems.Contains(item))
+        {
+            SelectedItems.Add(item);
+            await SelectedChanged.InvokeAsync(SelectedItems);
+        }
 
-    private async Task ClearSelection()
-    {
-        SelectedItem = default;
         SearchText = string.Empty;
-        FilteredItems = new();
+        FilteredItems.Clear();
         ShowSuggestions = false;
-        await SelectedChanged.InvokeAsync(default);
+        await inputRef.FocusAsync();
     }
 
-    private async Task OnInput(ChangeEventArgs e)
+    private async Task RemoveItem(TItem item)
     {
-        SearchText = e.Value?.ToString() ?? string.Empty;
-        await RefreshSuggestions();
+        SelectedItems.Remove(item);
+        await SelectedChanged.InvokeAsync(SelectedItems);
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Backspace" && string.IsNullOrEmpty(SearchText) && SelectedItems.Any())
+        {
+            SelectedItems.RemoveAt(SelectedItems.Count - 1);
+            SelectedChanged.InvokeAsync(SelectedItems);
+        }
     }
 }

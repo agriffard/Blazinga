@@ -1,32 +1,47 @@
 @page "/typeaheadDemo"
 
-<PageTitle>TypeAhead</PageTitle>
+<PageTitle>Typeahead</PageTitle>
 <SectionContent SectionName="top-header">
-    TypeAhead
+    Typeahead
 </SectionContent>
 
 <div class="row">
     <div class="col-md-6">
         <label>Customer</label>
         <Typeahead TItem="CustomerModel"
-           SearchFunction="SearchCustomersAsync"
-           ItemSelector="customer => customer.Name"
-           Placeholder="Search for a customer..."
-           SelectedChanged="OnCustomerSelected" />
+                   ItemSelector="customer => customer.Name"
+                   Placeholder="Search for a customer..."
+                   SearchFunction="SearchCustomersAsync"
+                   SelectedChanged="OnCustomerSelected">
+            <ItemTemplate Context="customer">
+                <div>
+                    <strong>@customer.Name</strong> <small>(@customer.Id)</small>
+                </div>
+            </ItemTemplate>
+        </Typeahead>
     </div>
     <div class="col-md-6">
         <label>Selected customer</label>
-        <span class="form-control-plaintext">
-            @if (selectedProduct != null)
-            {
-                <span>@selectedProduct.Name</span>
-            }
-        </span>
+        @if (selectedCustomers != null && selectedCustomers.Any())
+        {
+            <ul>
+                @foreach (var customer in selectedCustomers)
+                {
+                    <li>@customer.Name</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <span class="form-control-plaintext">
+                <span class="text-muted">No customers selected.</span>
+            </span>
+        }
     </div>
 </div>
 
 @code {
-    private CustomerModel? selectedProduct = new();
+    private List<CustomerModel>? selectedCustomers = new();
     private List<CustomerModel> customers = new List<CustomerModel>();
 
     protected override void OnInitialized()
@@ -41,9 +56,9 @@
         };
     }
 
-    private void OnCustomerSelected(CustomerModel? selected)
+    private void OnCustomerSelected(List<CustomerModel>? selected)
     {
-        selectedProduct = selected;
+        selectedCustomers = selected;
     }
 
     private async Task<List<CustomerModel>> SearchCustomersAsync(string searchText) //, CancellationToken cancellationToken)

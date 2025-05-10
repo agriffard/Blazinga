@@ -1,12 +1,27 @@
 @typeparam TItem
 
 <div class="position-relative">
-    <input type="text"
-           class="form-control"
-           @bind="SearchText"
-           @oninput="OnInput"
-           @onfocus="ShowDropdown"
-           placeholder="@Placeholder" />
+    <div class="form-control d-flex flex-wrap align-items-center gap-1" @onclick="() => inputRef.FocusAsync()">
+        @if (SelectedItems.Any())
+        {
+            @foreach (var item in SelectedItems)
+            {
+                <span class="badge bg-primary">
+                    @ItemSelector(item)
+                    <button type="button" class="btn-close btn-close-white btn-sm ms-2" @onclick="() => RemoveItem(item)" aria-label="Remove"></button>
+                </span>
+            }
+        }
+
+        <input type="text"
+               class="border-0 flex-grow-1"
+               value="@SearchText"
+               @oninput="OnInput"
+               @onfocus="ShowDropdown"
+               @onkeydown="HandleKeyDown"
+               placeholder="@Placeholder"
+               @ref="inputRef" />
+    </div>
 
     @if (ShowSuggestions && FilteredItems.Any())
     {
@@ -15,15 +30,17 @@
             {
                 <li>
                     <a class="dropdown-item" @onclick="() => SelectItem(item)">
-                        @ItemSelector(item)
+                        @if (ItemTemplate != null)
+                        {
+                            @ItemTemplate(item)
+                        }
+                        else
+                        {
+                            @ItemSelector(item)
+                        }
                     </a>
                 </li>
             }
         </ul>
-    }
-
-    @if (SelectedItem != null)
-    {
-        <button class="btn btn-close btn-sm position-absolute end-0 top-0 me-2 mt-2" type="button" @onclick="ClearSelection" />
     }
 </div>

@@ -2,16 +2,19 @@
 
 Blazinga is a Blazor components library.
 
-## Features
+## Components
 
-- Bind enum values to a select input.
+- AlertMessage
+- BadgeLabel
+- CheckboxList
+- DropdownSelect
+- EnumSelect
+- InputPercent
+- MultiSelect
+- PageSelector
+- RadioButtonList
+- Typeahead
 
 ## Installation
 
 https://www.nuget.org/packages/Blazinga/
-
-## Usage
-
-```razor
-<EnumSelect @bind-Value="Status" />
-```
