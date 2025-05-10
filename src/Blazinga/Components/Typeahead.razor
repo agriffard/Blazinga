@@ -2,15 +2,20 @@
 
 <div class="position-relative">
     <div class="form-control d-flex flex-wrap align-items-center gap-1" @onclick="() => inputRef.FocusAsync()">
-        @if (SelectedItems.Any())
+        @if (MultiSelect)
         {
             @foreach (var item in SelectedItems)
             {
                 <span class="badge bg-primary">
                     @ItemSelector(item)
-                    <button type="button" class="btn-close btn-close-white btn-sm ms-2" @onclick="() => RemoveItem(item)" aria-label="Remove"></button>
+                    <button type="button" class="btn-close btn-close-white btn-sm ms-2"
+                            @onclick="() => RemoveItem(item)" aria-label="Remove"></button>
                 </span>
             }
+        }
+        else if (SelectedItems.Count == 1)
+        {
+            <span class="me-2">@ItemSelector(SelectedItems[0])</span>
         }
 
         <input type="text"
@@ -20,7 +25,8 @@
                @onfocus="ShowDropdown"
                @onkeydown="HandleKeyDown"
                placeholder="@Placeholder"
-               @ref="inputRef" />
+               @ref="inputRef"
+               hidden="@(!MultiSelect && SelectedItems.Count == 1)" />
     </div>
 
     @if (ShowSuggestions && FilteredItems.Any())
@@ -42,5 +48,9 @@
                 </li>
             }
         </ul>
+    }
+    @if (!MultiSelect && SelectedItems.Count == 1)
+    {
+        <button class="btn btn-close btn-sm position-absolute end-0 top-0 me-2 mt-2" type="button" @onclick="ClearSelection" />
     }
 </div>

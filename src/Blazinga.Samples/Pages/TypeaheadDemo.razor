@@ -10,6 +10,7 @@
         <label>Customer</label>
         <Typeahead TItem="CustomerModel"
                    ItemSelector="customer => customer.Name"
+                   MultiSelect="true"
                    Placeholder="Search for a customer..."
                    SearchFunction="SearchCustomersAsync"
                    SelectedChanged="OnCustomerSelected">
@@ -21,7 +22,7 @@
         </Typeahead>
     </div>
     <div class="col-md-6">
-        <label>Selected customer</label>
+        <label>Selected customers</label>
         @if (selectedCustomers != null && selectedCustomers.Any())
         {
             <ul>
@@ -42,11 +43,10 @@
 
 @code {
     private List<CustomerModel>? selectedCustomers = new();
-    private List<CustomerModel> customers = new List<CustomerModel>();
 
-    protected override void OnInitialized()
+    private List<CustomerModel> getCustomers()
     {
-        customers = new List<CustomerModel>
+        var result = new List<CustomerModel>
         {
             new CustomerModel { Id = 1, Name = "John Doe" },
             new CustomerModel { Id = 2, Name = "Jane Smith" },
@@ -54,6 +54,8 @@
             new CustomerModel { Id = 4, Name = "Bob Brown" },
             new CustomerModel { Id = 5, Name = "Charlie Black" }
         };
+
+        return result;
     }
 
     private void OnCustomerSelected(List<CustomerModel>? selected)
@@ -61,11 +63,12 @@
         selectedCustomers = selected;
     }
 
-    private async Task<List<CustomerModel>> SearchCustomersAsync(string searchText) //, CancellationToken cancellationToken)
+    private async Task<List<CustomerModel>> SearchCustomersAsync(string searchText)
     {
+        var customers = getCustomers();
         if (string.IsNullOrEmpty(searchText))
         {
-            return customers;
+            return getCustomers();
         }
         var result = new List<CustomerModel>();
         result = customers.Where(x => x.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
@@ -73,4 +76,3 @@
         return await Task.FromResult(result);
     }
 }
-

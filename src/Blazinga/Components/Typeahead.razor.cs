@@ -3,6 +3,7 @@ public partial class Typeahead<TItem>
 {
     [Parameter] public Func<TItem, string> ItemSelector { get; set; } = item => item?.ToString() ?? string.Empty;
     [Parameter] public RenderFragment<TItem>? ItemTemplate { get; set; }
+    [Parameter] public bool MultiSelect { get; set; }
     [Parameter] public string Placeholder { get; set; } = "Search...";
     [Parameter] public Func<string, Task<List<TItem>>> SearchFunction { get; set; } = default!;
     [Parameter] public EventCallback<List<TItem>> SelectedChanged { get; set; }
@@ -38,16 +39,22 @@ public partial class Typeahead<TItem>
             if (SearchFunction is not null)
             {
                 FilteredItems = await SearchFunction(SearchText);
-                FilteredItems = FilteredItems
+                if (MultiSelect)
+                {
+                    FilteredItems = FilteredItems
                     .Where(item => !SelectedItems.Any(sel => ItemSelector(sel) == ItemSelector(item)))
                     .ToList();
+                }
             }
             //if (!string.IsNullOrWhiteSpace(SearchText) && SearchFunction is not null)
             //{
-            //    FilteredItems = await SearchFunction(SearchText);
-            //    FilteredItems = FilteredItems
-            //        .Where(item => !SelectedItems.Any(sel => ItemSelector(sel) == ItemSelector(item)))
-            //        .ToList();
+            //    if (MultiSelect)
+            //    {
+            //        FilteredItems = await SearchFunction(SearchText);
+            //        FilteredItems = FilteredItems
+            //            .Where(item => !SelectedItems.Any(sel => ItemSelector(sel) == ItemSelector(item)))
+            //            .ToList();
+            //    }
             //}
             //else
             //{
@@ -60,10 +67,27 @@ public partial class Typeahead<TItem>
         StateHasChanged();
     }
 
+    private async Task ClearSelection()
+    {
+        SelectedItems.Clear();
+        SearchText = string.Empty;
+        await SelectedChanged.InvokeAsync(default);
+        await inputRef.FocusAsync();
+    }
+
     private async Task SelectItem(TItem item)
     {
-        if (!SelectedItems.Contains(item))
+        if (MultiSelect)
         {
+            if (!SelectedItems.Contains(item))
+            {
+                SelectedItems.Add(item);
+                await SelectedChanged.InvokeAsync(SelectedItems);
+            }
+        }
+        else
+        {
+            SelectedItems.Clear();
             SelectedItems.Add(item);
             await SelectedChanged.InvokeAsync(SelectedItems);
         }
@@ -71,7 +95,7 @@ public partial class Typeahead<TItem>
         SearchText = string.Empty;
         FilteredItems.Clear();
         ShowSuggestions = false;
-        await inputRef.FocusAsync();
+        //await inputRef.FocusAsync(); // or else it always displays the dropdown
     }
 
     private async Task RemoveItem(TItem item)
@@ -82,7 +106,7 @@ public partial class Typeahead<TItem>
 
     private void HandleKeyDown(KeyboardEventArgs e)
     {
-        if (e.Key == "Backspace" && string.IsNullOrEmpty(SearchText) && SelectedItems.Any())
+        if (MultiSelect && e.Key == "Backspace" && string.IsNullOrEmpty(SearchText) && SelectedItems.Any())
         {
             SelectedItems.RemoveAt(SelectedItems.Count - 1);
             SelectedChanged.InvokeAsync(SelectedItems);
