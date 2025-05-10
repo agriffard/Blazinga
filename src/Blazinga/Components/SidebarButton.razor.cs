@@ -1,4 +1,4 @@
-namespace Blazinga.Samples.Components;
+namespace Blazinga.Components;
 public partial class SidebarButton
 {
     [Inject] NavMenuStateService NavState { get; set; } = default!;

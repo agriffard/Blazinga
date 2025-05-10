@@ -1,6 +1,7 @@
 namespace Blazinga.Samples.Components;
 public partial class GitHubSourceLink
 {
+    [Inject] NavigationManager Navigation { get; set; } = default!;
     private string? SourceUrl;
 
     protected override void OnInitialized()

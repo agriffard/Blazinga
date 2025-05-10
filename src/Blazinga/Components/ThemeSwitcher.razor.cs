@@ -1,4 +1,4 @@
-namespace Blazinga.Samples.Components;
+namespace Blazinga.Components;
 public partial class ThemeSwitcher
 {
     [Inject] ThemeService ThemeService { get; set; } = default!;

@@ -1,71 +1,57 @@
-@using Blazinga.Samples.Helpers
-@inject NavMenuStateService NavState
-
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Blazinga <span class="badge bg-primary">@VersionHelper.GetVersion()</span></a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="() => NavState.ToggleAsync()">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
-
-<div class="nav-scrollable">
-    <nav class="flex-column">
-        @* <div class="nav-item px-3">
+<nav class="nav flex-column">
+    @* <div class="nav-item">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="bi bi-house mx-2" aria-hidden="true"></span> Home
             </NavLink>
         </div> *@
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="alertMessageDemo">
-                <span class="bi bi-exclamation-circle mx-2" aria-hidden="true"></span> AlertMessage
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="badgeLabelDemo">
-                <span class="bi bi-tag mx-2" aria-hidden="true"></span> BadgeLabel
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="checkboxListDemo">
-                <span class="bi bi-list-check mx-2" aria-hidden="true"></span> CheckboxList
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="dropdownSelectDemo">
-                <span class="bi bi-list mx-2" aria-hidden="true"></span> DropdownSelect
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="enumSelectDemo">
-                <span class="bi bi-list-ul mx-2" aria-hidden="true"></span> EnumSelect
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="inputPercentDemo">
-                <span class="bi bi-percent mx-2" aria-hidden="true"></span> InputPercent
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="multiSelectDemo">
-                <span class="bi bi-tags mx-2" aria-hidden="true"></span> MultiSelect
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="pageSelectorDemo">
-                <span class="bi bi-chevron-right mx-2" aria-hidden="true"></span> PageSelector
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="radioButtonListDemo">
-                <span class="bi bi-ui-radios mx-2" aria-hidden="true"></span> RadioButtonList
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="typeaheadDemo">
-                <span class="bi bi-search mx-2" aria-hidden="true"></span> Typeahead
-            </NavLink>
-        </div>
-    </nav>
-</div>
+    @* <div class="nav-item">
+        <NavLink class="nav-link" href="alertDemo">
+            <span class="bi bi-exclamation-circle mx-2" aria-hidden="true"></span> Alert
+        </NavLink>
+    </div> *@
+    @* <div class="nav-item">
+        <NavLink class="nav-link" href="badgeDemo">
+            <span class="bi bi-tag mx-2" aria-hidden="true"></span> Badge
+        </NavLink>
+    </div> *@
+    <div class="nav-item">
+        <NavLink class="nav-link" href="checkboxListDemo">
+            <span class="bi bi-list-check mx-2" aria-hidden="true"></span> CheckboxList
+        </NavLink>
+    </div>
+    <div class="nav-item">
+        <NavLink class="nav-link" href="dropdownSelectDemo">
+            <span class="bi bi-list mx-2" aria-hidden="true"></span> DropdownSelect
+        </NavLink>
+    </div>
+    <div class="nav-item">
+        <NavLink class="nav-link" href="enumSelectDemo">
+            <span class="bi bi-list-ul mx-2" aria-hidden="true"></span> EnumSelect
+        </NavLink>
+    </div>
+    <div class="nav-item">
+        <NavLink class="nav-link" href="inputPercentDemo">
+            <span class="bi bi-percent mx-2" aria-hidden="true"></span> InputPercent
+        </NavLink>
+    </div>
+    <div class="nav-item">
+        <NavLink class="nav-link" href="multiSelectDemo">
+            <span class="bi bi-tags mx-2" aria-hidden="true"></span> MultiSelect
+        </NavLink>
+    </div>
+    <div class="nav-item">
+        <NavLink class="nav-link" href="pageSelectorDemo">
+            <span class="bi bi-chevron-right mx-2" aria-hidden="true"></span> PageSelector
+        </NavLink>
+    </div>
+    <div class="nav-item">
+        <NavLink class="nav-link" href="radioButtonListDemo">
+            <span class="bi bi-ui-radios mx-2" aria-hidden="true"></span> RadioButtonList
+        </NavLink>
+    </div>
+    <div class="nav-item">
+        <NavLink class="nav-link" href="typeaheadDemo">
+            <span class="bi bi-search mx-2" aria-hidden="true"></span> Typeahead
+        </NavLink>
+    </div>
+</nav>

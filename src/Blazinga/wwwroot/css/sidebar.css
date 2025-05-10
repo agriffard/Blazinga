@@ -1,0 +1,10 @@
+.sidebar-expanded {
+    width: 250px !important;
+    transition: width 0.3s ease;
+}
+
+.sidebar-collapsed {
+    width: 0px !important;
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+}

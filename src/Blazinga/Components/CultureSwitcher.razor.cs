@@ -1,4 +1,4 @@
-namespace Blazinga.Samples.Components;
+namespace Blazinga.Components;
 public partial class CultureSwitcher
 {
     [Inject] IJSRuntime JS { get; set; } = default!;

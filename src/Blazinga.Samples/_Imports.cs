@@ -4,6 +4,7 @@ global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Web;
 global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 global using Microsoft.JSInterop;
+global using Blazinga.Extensions;
 global using Blazinga.Samples.Resources;
 global using Blazinga.Samples;
 global using Blazinga.Services;

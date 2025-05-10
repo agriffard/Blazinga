@@ -4,8 +4,6 @@ Blazinga is a Blazor components library.
 
 ## Components
 
-- AlertMessage
-- BadgeLabel
 - CheckboxList
 - DropdownSelect
 - EnumSelect

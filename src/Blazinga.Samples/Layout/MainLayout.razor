@@ -1,22 +1,22 @@
 @inherits LayoutComponentBase
 @inject NavMenuStateService NavState
-<div class="page">
-    <div class="sidebar @NavMenuCssClass">
-        <NavMenu />
+<div class="d-flex min-vh-100">
+    <div class="@(NavState.IsCollapsed ? "sidebar-expanded" : "sidebar-collapsed") d-block bg-body d-flex flex-column flex-shrink-0">
+        <div class="p-3 border-end flex-grow-1 position-relative overflow-auto">
+            <h5 class="mb-4"><a href="/" class="navbar-brand">Blazinga <Badge CssClass="rounded-pill text-bg-primary">@VersionHelper.GetVersion()</Badge></a></h5>
+            <NavMenu />
+        </div>
     </div>
 
-    <main>
+    <div class="flex-grow-1 d-flex flex-column">
         <TopHeader />
-
-        <article class="content px-4">
+        <main class="p-4 flex-grow-1 overflow-auto">
             @Body
-        </article>
-    </main>
+        </main>
+    </div>
 </div>
 
 @code {
-    private string? NavMenuCssClass => NavState.IsCollapsed ? "d-none" : "d-block";
-
     protected override async Task OnInitializedAsync()
     {
         await NavState.InitializeAsync();
