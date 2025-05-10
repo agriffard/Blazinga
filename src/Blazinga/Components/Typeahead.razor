@@ -7,7 +7,7 @@
             @foreach (var item in SelectedItems)
             {
                 <span class="badge bg-primary">
-                    @ItemSelector(item)
+                    @TextSelector(item)
                     <button type="button" class="btn-close btn-close-white btn-sm ms-2"
                             @onclick="() => RemoveItem(item)" aria-label="Remove"></button>
                 </span>
@@ -15,7 +15,7 @@
         }
         else if (SelectedItems.Count == 1)
         {
-            <span class="me-2">@ItemSelector(SelectedItems[0])</span>
+            <span class="me-2">@TextSelector(SelectedItems[0])</span>
         }
 
         <input type="text"
@@ -42,7 +42,7 @@
                         }
                         else
                         {
-                            @ItemSelector(item)
+                            @TextSelector(item)
                         }
                     </a>
                 </li>

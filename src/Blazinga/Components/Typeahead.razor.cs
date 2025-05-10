@@ -2,13 +2,13 @@ namespace Blazinga.Components;
 public partial class Typeahead<TItem>
 {
     [Parameter] public int Height { get; set; } = 200;
-    [Parameter] public Func<TItem, string> ItemSelector { get; set; } = item => item?.ToString() ?? string.Empty;
     [Parameter] public RenderFragment<TItem>? ItemTemplate { get; set; }
     [Parameter] public bool MultiSelect { get; set; }
     [Parameter] public string Placeholder { get; set; } = "Search...";
     [Parameter] public Func<string, Task<List<TItem>>> SearchFunction { get; set; } = default!;
     [Parameter] public EventCallback<List<TItem>> SelectedChanged { get; set; }
     [Parameter] public List<TItem> SelectedItems { get; set; } = new();
+    [Parameter] public Func<TItem, string> TextSelector { get; set; } = item => item?.ToString() ?? string.Empty;
 
     private List<TItem> FilteredItems { get; set; } = new();
     private string SearchText { get; set; } = string.Empty;
@@ -43,7 +43,7 @@ public partial class Typeahead<TItem>
                 if (MultiSelect)
                 {
                     FilteredItems = FilteredItems
-                    .Where(item => !SelectedItems.Any(sel => ItemSelector(sel) == ItemSelector(item)))
+                    .Where(item => !SelectedItems.Any(sel => TextSelector(sel) == TextSelector(item)))
                     .ToList();
                 }
             }

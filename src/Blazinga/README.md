@@ -6,6 +6,7 @@ Blazinga is a Blazor components library.
 
 - CheckboxList
 - DropdownSelect
+- DualListBox
 - EnumSelect
 - InputPercent
 - MultiSelect

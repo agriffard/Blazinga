@@ -9,11 +9,11 @@
     <div class="col-md-6">
         <label>Customer</label>
         <Typeahead TItem="CustomerModel"
-                   ItemSelector="customer => customer.Name"
                    MultiSelect="true"
                    Placeholder="Search for a customer..."
                    SearchFunction="SearchCustomersAsync"
                    SelectedChanged="OnCustomerSelected"
+                   TextSelector="customer => customer.Name"
                    Height="300">
             <ItemTemplate Context="customer">
                 <div>

@@ -1,0 +1,28 @@
+@typeparam TItem
+
+<div class="row">
+    <div class="col">
+        <select multiple class="form-control" style="height: @(Height)px;" @onchange="OnAvailableChanged">
+            @foreach (var item in AvailableItems.Except(SelectedItems))
+            {
+                <option value="@GetItemKey(item)" selected="@selectedAvailableItemKeys.Contains(GetItemKey(item))">
+                    @TextSelector(item)
+                </option>
+            }
+        </select>
+    </div>
+    <div class="col-auto d-flex flex-column justify-content-center">
+        <button class="btn btn-primary mb-2" @onclick="MoveToSelected" disabled="@(!selectedAvailableItemKeys.Any())">&gt;</button>
+        <button class="btn btn-secondary" @onclick="MoveToAvailable" disabled="@(!selectedSelectedItemKeys.Any())">&lt;</button>
+    </div>
+    <div class="col">
+        <select multiple class="form-control" style="height: @(Height)px;"  @onchange="OnSelectedChanged">
+            @foreach (var item in SelectedItems)
+            {
+                <option value="@GetItemKey(item)" selected="@selectedSelectedItemKeys.Contains(GetItemKey(item))">
+                    @TextSelector(item)
+                </option>
+            }
+        </select>
+    </div>
+</div>

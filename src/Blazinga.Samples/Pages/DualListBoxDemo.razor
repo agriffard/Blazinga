@@ -1,0 +1,46 @@
+@page "/dualListBoxDemo"
+
+<PageTitle>DualListBox</PageTitle>
+<SectionContent SectionName="top-header">
+    DualListBox
+</SectionContent>
+
+<div class="row">
+    <div class="col-md-6">
+        <label for="status">Products</label>
+        <DualListBox TItem="ProductModel"
+                     AvailableItems="@products"
+                     SelectedItems="@selectedProducts"
+                     SelectedItemsChanged="OnSelectedChanged"
+                     TextSelector="@(p => $"{p.Name} (${p.Price})")"
+                     KeySelector="@(p => p.Id.ToString())"
+                     Height="300" />
+    </div>
+    <div class="col-md-6">
+        <label>Selected products</label>
+        <ul>
+            @foreach (var p in selectedProducts)
+            {
+                <li>@p.Name - $@p.Price</li>
+            }
+        </ul>
+    </div>
+</div>
+
+@code {
+    private List<ProductModel> products = new()
+    {
+        new ProductModel { Id = 1, Name = "Laptop", Price = 1200 },
+        new ProductModel { Id = 2, Name = "Phone", Price = 800 },
+        new ProductModel { Id = 3, Name = "Tablet", Price = 500 },
+        new ProductModel { Id = 4, Name = "Monitor", Price = 300 }
+    };
+
+    private List<ProductModel> selectedProducts = new();
+
+    private Task OnSelectedChanged(List<ProductModel> updatedSelection)
+    {
+        return Task.CompletedTask;
+    }
+
+}
