@@ -1,0 +1,7 @@
+<a class="nav-link dropdown-toggle me-2" data-bs-toggle="dropdown" href="#" role="button">
+    <i class="bi bi-translate"></i>
+</a>
+<ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item @(currentCulture == "en" ? "active" : "")" @onclick="@(() => SetCultureAsync("en"))">English</button></li>
+    <li><button class="dropdown-item @(currentCulture == "fr" ? "active" : "")" @onclick="@(() => SetCultureAsync("fr"))">Français</button></li>
+</ul>

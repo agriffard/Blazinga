@@ -1,6 +1,4 @@
-using Blazinga.Samples.Services;
-
-namespace Blazinga.Samples.Layout;
+namespace Blazinga.Samples.Components;
 public partial class ThemeSwitcher
 {
     private string GetThemeCssClass()

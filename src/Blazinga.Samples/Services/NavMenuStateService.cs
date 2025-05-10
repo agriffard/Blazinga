@@ -1,5 +1,3 @@
-using Microsoft.JSInterop;
-
 namespace Blazinga.Samples.Services;
 
 public class NavMenuStateService

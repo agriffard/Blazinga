@@ -2,10 +2,3 @@
 <button class="btn btn-outline mx-2" @onclick="ToggleNav">
     <i class="bi bi-list"></i>
 </button>
-
-@code {
-    private async Task ToggleNav()
-    {
-        await NavState.ToggleAsync();
-    }
-}

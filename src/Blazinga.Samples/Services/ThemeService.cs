@@ -1,10 +1,8 @@
-using Microsoft.JSInterop;
-
 namespace Blazinga.Samples.Services;
 
 public class ThemeService
 {
-    private const string ThemeKey = "theme"; // localStorage key
+    private const string ThemeKey = "theme";
     private readonly IJSRuntime _js;
 
     public string CurrentTheme { get; private set; } = "auto";
