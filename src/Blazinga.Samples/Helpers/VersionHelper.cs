@@ -1,4 +1,4 @@
-namespace Blazinga.Samples;
+namespace Blazinga.Samples.Helpers;
 
 public class VersionHelper
 {

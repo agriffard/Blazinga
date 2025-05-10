@@ -61,6 +61,33 @@ namespace Blazinga.Samples.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BankTransfer.
+        /// </summary>
+        public static string PaymentMethod_BankTransfer {
+            get {
+                return ResourceManager.GetString("PaymentMethod_BankTransfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card.
+        /// </summary>
+        public static string PaymentMethod_Card {
+            get {
+                return ResourceManager.GetString("PaymentMethod_Card", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PayPal.
+        /// </summary>
+        public static string PaymentMethod_PayPal {
+            get {
+                return ResourceManager.GetString("PaymentMethod_PayPal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Active.
         /// </summary>
         public static string Status_Active {

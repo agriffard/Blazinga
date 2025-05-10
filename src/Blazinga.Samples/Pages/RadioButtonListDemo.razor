@@ -1,0 +1,36 @@
+@page "/radioButtonListDemo"
+
+<PageTitle>RadioButtonList</PageTitle>
+<SectionContent SectionName="top-header">
+    RadioButtonList
+</SectionContent>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>Payment method</label>
+        <RadioButtonList TValue="PaymentMethod"
+                         Items="@PaymentMethods"
+                         Value="@SelectedMethod"
+                         ValueChanged="@((val) => SelectedMethod = val)"
+                         CssClass="mb-3" />
+    </div>
+    <div class="col-md-6">
+        <label>Selected method</label>
+        <span class="form-control-plaintext">
+            @SelectedMethod
+        </span>
+    </div>
+</div>
+
+@code {
+    private PaymentMethod SelectedMethod = PaymentMethod.Card;
+    private List<RadioButtonItem<PaymentMethod>> PaymentMethods = new();
+
+    protected override void OnInitialized()
+    {
+        PaymentMethods = Enum.GetValues(typeof(PaymentMethod))
+            .Cast<PaymentMethod>()
+            .Select(x => new RadioButtonItem<PaymentMethod>(x, x.GetLocalizedDisplayName()))
+            .ToList();
+    }
+}
