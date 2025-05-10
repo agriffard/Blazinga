@@ -1,6 +1,7 @@
 namespace Blazinga.Components;
 public partial class Typeahead<TItem>
 {
+    [Parameter] public int Height { get; set; } = 200;
     [Parameter] public Func<TItem, string> ItemSelector { get; set; } = item => item?.ToString() ?? string.Empty;
     [Parameter] public RenderFragment<TItem>? ItemTemplate { get; set; }
     [Parameter] public bool MultiSelect { get; set; }

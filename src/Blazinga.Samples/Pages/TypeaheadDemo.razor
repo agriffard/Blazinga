@@ -13,10 +13,12 @@
                    MultiSelect="true"
                    Placeholder="Search for a customer..."
                    SearchFunction="SearchCustomersAsync"
-                   SelectedChanged="OnCustomerSelected">
+                   SelectedChanged="OnCustomerSelected"
+                   Height="300">
             <ItemTemplate Context="customer">
                 <div>
-                    <strong>@customer.Name</strong> <small>(@customer.Id)</small>
+                    <strong>@customer.Name</strong><br />
+                    <small>(@customer.Id)</small>
                 </div>
             </ItemTemplate>
         </Typeahead>

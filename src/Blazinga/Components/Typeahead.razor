@@ -31,7 +31,7 @@
 
     @if (ShowSuggestions && FilteredItems.Any())
     {
-        <ul class="dropdown-menu show w-100" style="max-height: 200px; overflow-y: auto;">
+        <ul class="dropdown-menu show w-100" style="max-height: @(Height)px; overflow-y: auto;">
             @foreach (var item in FilteredItems)
             {
                 <li>
