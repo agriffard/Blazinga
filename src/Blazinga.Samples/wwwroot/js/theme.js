@@ -1,23 +1,18 @@
-window.setBsTheme = function (theme) {
-    let effectiveTheme = theme;
+window.setBootstrapTheme = (theme) => {
+    window.currentTheme = theme;
+    const apply = () => {
+        let t = window.currentTheme;
+        if (t === 'auto') {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            t = prefersDark ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-bs-theme', t);
+    };
 
-    if (theme === "auto") {
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        effectiveTheme = prefersDark ? "dark" : "light";
+    apply();
 
-        // Optional: auto-switch when system theme changes
-        window.matchMedia("(prefers-color-scheme: dark)").onchange = (e) => {
-            const newTheme = e.matches ? "dark" : "light";
-            if (localStorage.getItem("bs-theme") === "auto") {
-                document.documentElement.setAttribute("data-bs-theme", newTheme);
-            }
-        };
+    if (!window._themeListenerSet) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', apply);
+        window._themeListenerSet = true;
     }
-
-    document.documentElement.setAttribute("data-bs-theme", effectiveTheme);
-    localStorage.setItem("bs-theme", theme);
-};
-
-window.getBsTheme = function () {
-    return localStorage.getItem("bs-theme") || "auto";
 };
