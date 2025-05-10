@@ -1,120 +1,79 @@
 namespace Blazinga.Components;
-public partial class TypeAhead<TItem, TValue>
+public partial class Typeahead<TItem>
 {
-    [Parameter] public Func<string, CancellationToken, Task<List<TItem>>> SearchFunction { get; set; }
-    [Parameter] public EventCallback OnReset { get; set; }
-    [Parameter] public string NoResultsText { get; set; } // = SharedResource.NoResults;
-    [Parameter] public string Placeholder { get; set; }
-    [Parameter] public string CssClass { get; set; }
-    [Parameter] public int Height { get; set; } = 150;
-    [Parameter] public TValue Value { get; set; }
-    [Parameter] public EventCallback<TValue> ValueChanged { get; set; }
-    [Parameter] public EventCallback<string> TextChanged { get; set; }
-    [Parameter] public EventCallback<TItem> SelectedItemChanged { get; set; }
-    [Parameter] public Expression<Func<TItem, TValue>> ValueSelector { get; set; }
-    [Parameter] public Expression<Func<TItem, string>> TextSelector { get; set; }
-    [Parameter] public string InitialText { get; set; }
-    public string Text { get; set; }
-    public TItem SelectedItem { get; set; }
+    [Parameter] public Func<string, Task<List<TItem>>> SearchFunction { get; set; } = default!;
+    [Parameter] public EventCallback<TItem?> SelectedChanged { get; set; }
+    [Parameter] public Func<TItem, string> ItemSelector { get; set; } = item => item?.ToString() ?? string.Empty;
+    [Parameter] public string Placeholder { get; set; } = "Search...";
+    [Parameter] public TItem? SelectedItem { get; set; }
+
     private List<TItem> FilteredItems { get; set; } = new();
-    private bool IsDropdownVisible { get; set; }
+    private string SearchText { get; set; } = string.Empty;
+    private bool ShowSuggestions { get; set; } = false;
+    private CancellationTokenSource? DebounceCts;
 
-    private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        Text = InitialText;
+        if (SelectedItem != null)
+        {
+            SearchText = ItemSelector(SelectedItem);
+        }
     }
 
-    private async Task OnTextChanged(ChangeEventArgs e)
+    private async Task ShowDropdown()
     {
-        Text = e.Value?.ToString();
-        await TextChanged.InvokeAsync(Text);
+        ShowSuggestions = true;
+        await RefreshSuggestions();
+    }
 
-        if (!IsDropdownVisible)
-        {
-            IsDropdownVisible = true;
-        }
+    private async Task RefreshSuggestions()
+    {
+        DebounceCts?.Cancel();
+        DebounceCts = new CancellationTokenSource();
+        var token = DebounceCts.Token;
 
         try
         {
-            FilteredItems = await GetFilteredItems(Text);
-            IsDropdownVisible = FilteredItems.Count > 0;
+            await Task.Delay(200, token);
+            if (SearchFunction is not null)
+            {
+                FilteredItems = await SearchFunction(SearchText);
+            }
+            //if (!string.IsNullOrWhiteSpace(SearchText) && SearchFunction is not null)
+            //{
+            //    FilteredItems = await SearchFunction(SearchText);
+            //}
+            //else
+            //{
+            //    FilteredItems = new();
+            //}
         }
-        catch (InvalidOperationException ioex)
-        {
-            // Even if we use CancellationToken, it can happen sometimes.
-            // System.InvalidOperationException: A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext
-        }
-    }
+        catch (TaskCanceledException) { }
 
-    private void HideDropdown()
-    {
-        IsDropdownVisible = false;
-    }
-
-    private async Task<List<TItem>> GetFilteredItems(string text)
-    {
-        // Cancel the previous search operation
-        _cancellationTokenSource.Cancel();
-        _cancellationTokenSource = new CancellationTokenSource();
-
-        return await SearchFunction(text, _cancellationTokenSource.Token);
-    }
-
-    private async Task ToggleDropdown()
-    {
-        //if opening for the first time, fetch datas
-        if (!IsDropdownVisible && string.IsNullOrEmpty(Text) && FilteredItems.Count == 0)
-        {
-            FilteredItems = await GetFilteredItems(Text);
-        }
-
-        IsDropdownVisible = !IsDropdownVisible;
-    }
-
-    private void OnItemKeyDown(KeyboardEventArgs e, TItem item)
-    {
-        if (e.Key == "Enter")
-        {
-            // Select the item when Enter is pressed
-            SelectItem(item);
-        }
-    }
-
-    private async Task ResetSelection()
-    {
-        //If the string is not already empty get items
-        var newText = string.Empty;
-        if (Text != newText)
-        {
-            FilteredItems = await GetFilteredItems(newText);
-        }
-        Text = newText;
-
-        SelectedItem = default(TItem);
-        Value = default(TValue);
-        IsDropdownVisible = false;
-        await OnReset.InvokeAsync();
-        await SelectedItemChanged.InvokeAsync(SelectedItem);
-        await ValueChanged.InvokeAsync(Value);
-        await TextChanged.InvokeAsync(Text);
+        ShowSuggestions = true;
+        StateHasChanged();
     }
 
     private async Task SelectItem(TItem item)
     {
-        var newText = TextSelector.Compile().Invoke(item);
-        if (Text != newText)
-        {
-            FilteredItems = await GetFilteredItems(newText);
-        }
-        Text = newText;
-
         SelectedItem = item;
-        Value = ValueSelector.Compile().Invoke(item);
-        IsDropdownVisible = false;
-        await SelectedItemChanged.InvokeAsync(SelectedItem);
-        await ValueChanged.InvokeAsync(Value);
-        await TextChanged.InvokeAsync(Text);
+        SearchText = ItemSelector(item);
+        ShowSuggestions = false;
+        await SelectedChanged.InvokeAsync(item);
+    }
+
+    private async Task ClearSelection()
+    {
+        SelectedItem = default;
+        SearchText = string.Empty;
+        FilteredItems = new();
+        ShowSuggestions = false;
+        await SelectedChanged.InvokeAsync(default);
+    }
+
+    private async Task OnInput(ChangeEventArgs e)
+    {
+        SearchText = e.Value?.ToString() ?? string.Empty;
+        await RefreshSuggestions();
     }
 }

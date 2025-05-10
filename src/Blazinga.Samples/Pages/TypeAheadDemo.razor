@@ -1,4 +1,4 @@
-@page "/typeAheadDemo"
+@page "/typeaheadDemo"
 
 <PageTitle>TypeAhead</PageTitle>
 <SectionContent SectionName="top-header">
@@ -7,18 +7,15 @@
 
 <div class="row">
     <div class="col-md-6">
-        <label>Product</label>
-        <TypeAhead TItem="ProductModel" TValue="int?"
-                   ValueSelector="item => item.Id" TextSelector="item => item.Name"
-                   ValueChanged="OnProductChanged"
-                   InitialText="@selectedProduct?.Name"
-                   SearchFunction="SearchProductAsync"
-                   CssClass="form-control"
-                   NoResultsText="No results." Placeholder="Search..."
-                   Height="200" />
+        <label>Customer</label>
+        <Typeahead TItem="CustomerModel"
+           SearchFunction="SearchCustomersAsync"
+           ItemSelector="customer => customer.Name"
+           Placeholder="Search for a customer..."
+           SelectedChanged="OnCustomerSelected" />
     </div>
     <div class="col-md-6">
-        <label>Selected Product</label>
+        <label>Selected customer</label>
         <span class="form-control-plaintext">
             @if (selectedProduct != null)
             {
@@ -29,43 +26,35 @@
 </div>
 
 @code {
-    private ProductModel? selectedProduct = new();
-    private List<ProductModel> products = new List<ProductModel>();
+    private CustomerModel? selectedProduct = new();
+    private List<CustomerModel> customers = new List<CustomerModel>();
 
     protected override void OnInitialized()
     {
-        products = new List<ProductModel>()
+        customers = new List<CustomerModel>
         {
-            new ProductModel { Id = 1, Name = "Product 1" },
-            new ProductModel { Id = 2, Name = "Product 2" },
-            new ProductModel { Id = 3, Name = "Product 3" },
-            new ProductModel { Id = 4, Name = "Product 4" },
-            new ProductModel { Id = 5, Name = "Product 5" },
+            new CustomerModel { Id = 1, Name = "John Doe" },
+            new CustomerModel { Id = 2, Name = "Jane Smith" },
+            new CustomerModel { Id = 3, Name = "Alice Johnson" },
+            new CustomerModel { Id = 4, Name = "Bob Brown" },
+            new CustomerModel { Id = 5, Name = "Charlie Black" }
         };
-        //selectedProduct = products.FirstOrDefault();
     }
 
-    private async Task<List<ProductModel>> SearchProductAsync(string searchText, CancellationToken cancellationToken)
+    private void OnCustomerSelected(CustomerModel? selected)
+    {
+        selectedProduct = selected;
+    }
+
+    private async Task<List<CustomerModel>> SearchCustomersAsync(string searchText) //, CancellationToken cancellationToken)
     {
         if (string.IsNullOrEmpty(searchText))
         {
-            return products;
+            return customers;
         }
-        var result = new List<ProductModel>();
-        result = products.Where(x => x.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        var result = new List<CustomerModel>();
+        result = customers.Where(x => x.Name.Contains(searchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
         return await Task.FromResult(result);
-    }
-
-    private void OnProductChanged(int? productId)
-    {
-        if (productId.HasValue)
-        {
-            selectedProduct = products.FirstOrDefault(x => x.Id == productId.Value) ?? null;
-        }
-        else
-        {
-            selectedProduct = null;
-        }
     }
 }
