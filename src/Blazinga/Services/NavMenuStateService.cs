@@ -1,4 +1,4 @@
-namespace Blazinga.Samples.Services;
+namespace Blazinga.Services;
 
 public class NavMenuStateService
 {
